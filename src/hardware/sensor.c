@@ -32,7 +32,7 @@ uint8_t sensor_read(void) {
 // }
 
 // Hàm callback chưa có
-__weak void sensor_exti_callback(void) {
+void sensor_exti_callback(void) {
 }
 
 // Trình phục vụ ngắt EXTI4 đơn giản
