@@ -1,5 +1,4 @@
 core_cm4.h:1452:22:NVIC_EnableIRQ	16	static
-core_cm4.h:1535:22:NVIC_SetPriority	16	static
-timer.c:18:6:timer2_init_1ms	8	static
-timer.c:33:6:TIM2_IRQHandler	4	static
-timer.c:42:10:timer2_get_tick	4	static
+timer.c:6:6:timer2_init_1ms	8	static
+timer.c:16:6:TIM2_IRQHandler	4	static
+timer.c:25:10:timer2_get_tick	4	static

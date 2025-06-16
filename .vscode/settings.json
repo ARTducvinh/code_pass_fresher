@@ -3,6 +3,8 @@
         "stm32f4xx.h": "c",
         "timer.h": "c",
         "stdint.h": "c",
-        "system_stm32f4xx.h": "c"
+        "system_stm32f4xx.h": "c",
+        "led.h": "c",
+        "led_logic.h": "c"
     }
 }

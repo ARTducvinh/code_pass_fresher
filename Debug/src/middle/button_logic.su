@@ -1,0 +1,3 @@
+button_logic.c:21:6:button_logic_init	8	static
+button_logic.c:25:6:button_logic_update	24	static
+button_logic.c:53:6:button_logic_process	16	static

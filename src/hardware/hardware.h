@@ -1,6 +1,7 @@
 #ifndef __HARDWARE_H__
 #define __HARDWARE_H__
 
+#include "stm32f4xx.h"
 #include <stdint.h>
 #include <stddef.h>
 #define LED_ON 1
@@ -88,7 +89,10 @@ typedef struct {
 #define SIM_PWKEY_LOW() GPIO_SetBits(SIM_PWKEY_GPIO, SIM_PWKEY_Pin)
 #define SIM_PWKEY_HIGH() GPIO_ResetBits(SIM_PWKEY_GPIO, SIM_PWKEY_Pin)
 
-/* system */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void hardware_init(void);
 uint32_t sys_get_tick_ms();
 
@@ -101,5 +105,9 @@ void hw_led_config(uint8_t pin);
 void hw_led_write(uint8_t pin, uint8_t state);
 void switch_init(void);
 uint8_t switch_read(uint8_t index);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

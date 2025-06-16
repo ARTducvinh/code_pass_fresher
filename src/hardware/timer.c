@@ -5,13 +5,11 @@ static volatile uint32_t timer2_tick = 0;
 
 void timer2_init_1ms(void)
 {
-    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
     TIM2->PSC = 15;      // 16MHz / (15+1) = 1MHz
     TIM2->ARR = 999;     // 1MHz / (999+1) = 1kHz (1ms)
     TIM2->EGR = TIM_EGR_UG;
     TIM2->DIER |= TIM_DIER_UIE;
     TIM2->CR1 |= TIM_CR1_CEN;
-    NVIC_SetPriority(TIM2_IRQn, 3);
     NVIC_EnableIRQ(TIM2_IRQn);
 }
 

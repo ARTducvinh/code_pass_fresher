@@ -1,0 +1,2 @@
+uart.c:6:6:uart_init	4	static
+uart.c:18:6:uart_log	24	static

@@ -1,0 +1,2 @@
+led_logic.c:5:6:led_logic_blink_200_200	16	static
+led_logic.c:27:6:led_logic_blink_200_500_200_2000	16	static

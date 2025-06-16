@@ -1,0 +1,2 @@
+logger.c:4:6:logger_init	8	static
+logger.c:8:6:logger_log	16	static
