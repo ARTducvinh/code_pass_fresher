@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdtprojectproperties>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.IncludePaths">
+<language name="S,s,asm">
+<includepath>src</includepath>
+<includepath>Libraries/CMSIS/Include</includepath>
+<includepath>Libraries/Device/STM32F4xx/Include</includepath>
+<includepath>Libraries/STM32F4xx_StdPeriph_Driver/inc</includepath>
+</language>
+<language name="C Source File">
+<includepath>Libraries/CMSIS/Include</includepath>
+<includepath>Libraries/Device/STM32F4xx/Include</includepath>
+<includepath>Libraries/STM32F4xx_StdPeriph_Driver/inc</includepath>
+<includepath workspace_path="true">/src_code/src/hardware</includepath>
+<includepath workspace_path="true">/src_code/src/middle</includepath>
+<includepath workspace_path="true">/src_code/src/gsm</includepath>
+<includepath workspace_path="true">/src_code/src</includepath>
+<includepath workspace_path="true">/src_code/src/ppp_net</includepath>
+<includepath workspace_path="true">/src_code/src/ppp_net/arch</includepath>
+<!-- LwIP PPPoS MINIMAL INCLUDE PATHS -->
+<includepath workspace_path="true">/src_code/lwip/src</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/core</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/core/ipv4</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/netif/ppp</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/include</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/include/lwip</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/include/netif</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/include/netif/ppp</includepath>
+</language>
+<language name="C++ Source File">
+<includepath>src</includepath>
+<includepath>Libraries/CMSIS/Include</includepath>
+<includepath>Libraries/Device/STM32F4xx/Include</includepath>
+<includepath>Libraries/STM32F4xx_StdPeriph_Driver/inc</includepath>
+<includepath workspace_path="true">/src_code/src/hardware</includepath>
+<includepath workspace_path="true">/src_code/src/middle</includepath>
+<!-- LwIP PPPoS MINIMAL INCLUDE PATHS -->
+<includepath workspace_path="true">/src_code/lwip/src</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/core</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/core/ipv4</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/netif/ppp</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/include</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/include/lwip</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/include/netif</includepath>
+<includepath workspace_path="true">/src_code/lwip/src/include/netif/ppp</includepath>
+</language>
+<language name="Object File">
+</language>
+</section>
+<section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.Macros">
+<language name="S,s,asm">
+<macro>
+<name>STM32F4XX</name><value/>
+</macro>
+<macro>
+<name>STM32F40XX</name><value/>
+</macro>
+<macro>
+<name>USE_STDPERIPH_DRIVER</name><value/>
+</macro>
+</language>
+<language name="C Source File">
+<macro>
+<name>STM32F4XX</name><value/>
+</macro>
+<macro>
+<name>STM32F40XX</name><value/>
+</macro>
+<macro>
+<name>USE_STDPERIPH_DRIVER</name><value/>
+</macro>
+</language>
+<language name="C++ Source File">
+<macro>
+<name>STM32F4XX</name><value/>
+</macro>
+<macro>
+<name>STM32F40XX</name><value/>
+</macro>
+<macro>
+<name>USE_STDPERIPH_DRIVER</name><value/>
+</macro>
+</language>
+<language name="Object File">
+</language>
+</section>
+</cdtprojectproperties>

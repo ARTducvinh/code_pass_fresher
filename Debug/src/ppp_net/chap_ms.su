@@ -1,0 +1,14 @@
+chap_ms.c:374:13:chapms_make_response	32	static
+chap_ms.c:385:13:chapms2_make_response	48	static
+chap_ms.c:401:12:chapms2_check_success	24	static
+chap_ms.c:431:13:chapms_handle_failure	96	static
+chap_ms.c:496:13:ChallengeResponse	192	static
+chap_ms.c:534:13:ChallengeHash	144	static
+chap_ms.c:564:13:ascii2unicode	32	static
+chap_ms.c:572:13:NTPasswordHash	112	static
+chap_ms.c:582:13:ChapMS_NT	560	static
+chap_ms.c:594:13:ChapMS2_NT	568	static
+chap_ms.c:642:13:GenerateAuthenticatorResponse	152	static
+chap_ms.c:690:13:GenerateAuthenticatorResponsePlain	584	static
+chap_ms.c:838:13:ChapMS	24	static
+chap_ms.c:873:13:ChapMS2	40	static

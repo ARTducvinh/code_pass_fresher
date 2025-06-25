@@ -9,6 +9,7 @@ extern "C" {
 
 void timer2_init_1ms(void);
 uint32_t timer2_get_tick(void);
+void delay_ms(uint32_t ms);
 
 #ifdef __cplusplus
 }

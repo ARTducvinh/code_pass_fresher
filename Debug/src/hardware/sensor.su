@@ -1,0 +1,4 @@
+sensor.c:5:6:sensor_init	4	static
+sensor.c:23:9:sensor_read	4	static
+sensor.c:35:6:sensor_exti_callback	4	static
+sensor.c:39:6:EXTI4_IRQHandler	8	static

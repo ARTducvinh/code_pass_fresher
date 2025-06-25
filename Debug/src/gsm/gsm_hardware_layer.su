@@ -1,0 +1,6 @@
+gsm_hardware_layer.c:7:6:gsm_power_on_hw	16	static
+gsm_hardware_layer.c:14:6:gsm_power_off_hw	16	static
+gsm_hardware_layer.c:21:6:gsm_reset_hw	8	static
+gsm_hardware_layer.c:27:6:gsm_hw_send_raw	16	static
+gsm_hardware_layer.c:32:6:gsm_hw_receive_callback	16	static
+gsm_hardware_layer.c:40:6:USART1_IRQHandler	16	static

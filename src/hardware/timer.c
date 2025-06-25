@@ -10,6 +10,7 @@ void timer2_init_1ms(void)
     TIM2->EGR = TIM_EGR_UG;
     TIM2->DIER |= TIM_DIER_UIE;
     TIM2->CR1 |= TIM_CR1_CEN;
+
     NVIC_EnableIRQ(TIM2_IRQn);
 }
 
@@ -25,4 +26,11 @@ void TIM2_IRQHandler(void)
 uint32_t timer2_get_tick(void)
 {
     return timer2_tick;
+}
+
+void delay_ms(uint32_t ms)
+{
+    uint32_t start = timer2_get_tick();
+    while ((timer2_get_tick() - start) < ms) {
+    }
 }

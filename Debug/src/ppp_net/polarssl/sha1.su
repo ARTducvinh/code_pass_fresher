@@ -1,0 +1,5 @@
+sha1.c:74:6:sha1_starts	16	static
+sha1.c:86:13:sha1_process	104	static
+sha1.c:245:6:sha1_update	32	static
+sha1.c:297:6:sha1_finish	40	static
+sha1.c:326:6:sha1	120	static

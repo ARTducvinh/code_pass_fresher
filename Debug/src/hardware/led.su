@@ -1,4 +1,10 @@
 led.c:4:6:led_init	4	static
-led.c:16:6:led_4g_on	4	static
-led.c:20:6:led_4g_off	4	static
-led.c:24:6:led_4g_toggle	16	static
+led.c:31:6:led_4g_on	4	static
+led.c:35:6:led_4g_off	4	static
+led.c:39:6:led_4g_toggle	16	static
+led.c:46:6:led_green_network_on	4	static
+led.c:50:6:led_green_network_off	4	static
+led.c:54:6:led_green_network_toggle	16	static
+led.c:61:6:led_blue_statemachine_on	4	static
+led.c:65:6:led_blue_statemachine_off	4	static
+led.c:69:6:led_blue_statemachine_toggle	16	static

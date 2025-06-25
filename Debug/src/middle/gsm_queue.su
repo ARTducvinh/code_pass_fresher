@@ -1,0 +1,5 @@
+gsm_queue.c:8:6:gsm_queue_init	8	static
+gsm_queue.c:14:6:gsm_queue_enqueue	24	static
+gsm_queue.c:35:13:gsm_queue_peek	4	static
+gsm_queue.c:40:6:gsm_queue_dequeue	16	static
+gsm_queue.c:49:9:gsm_queue_is_empty	4	static

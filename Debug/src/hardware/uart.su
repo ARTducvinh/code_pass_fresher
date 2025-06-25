@@ -1,2 +1,11 @@
-uart.c:6:6:uart_init	4	static
-uart.c:18:6:uart_log	24	static
+core_cm4.h:1452:22:NVIC_EnableIRQ	16	static
+uart.c:22:6:uart_init_all	8	static
+uart.c:74:6:uart_log	24	static
+uart.c:89:6:usart1_hw_uart_send_raw	24	static
+uart.c:100:6:uart_set_ppp_mode	16	static
+uart.c:111:6:usart1_dma_rx_check	16	static
+uart.c:142:6:gsm_hw_layer_uart_fill_rx	24	static
+uart.c:164:6:DMA2_Stream2_IRQHandler	8	static
+uart.c:174:6:uart_poll_dma_rx	8	static
+uart.c:180:6:uart_enable_usart1_idle_irq	8	static
+uart.c:187:6:USART1_IRQHandler	16	static

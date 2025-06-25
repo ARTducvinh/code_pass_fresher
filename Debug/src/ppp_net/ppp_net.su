@@ -1,0 +1,5 @@
+ppp_net.c:16:13:ppp_status_cb	152	static
+ppp_net.c:56:6:ppp_net_init	8	static
+ppp_net.c:69:6:ppp_net_poll	80	static
+ppp_net.c:92:6:ppp_net_is_connected	4	static
+ppp_net.c:97:15:ppp_net_get_netif	4	static

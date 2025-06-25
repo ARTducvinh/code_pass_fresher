@@ -1,0 +1,2 @@
+mqtt.c:15:6:check_gsm_boot_status	528	static
+mqtt.c:47:6:check_sim_and_internet	528	static

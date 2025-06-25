@@ -1,0 +1,6 @@
+magic.c:100:13:magic_churnrand	112	static
+magic.c:133:6:magic_init	8	static
+magic.c:140:6:magic_randomize	8	static
+magic.c:162:6:magic_random_bytes	128	static
+magic.c:185:7:magic	16	static
+magic.c:282:7:magic_pow	16	static

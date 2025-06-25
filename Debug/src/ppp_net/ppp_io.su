@@ -1,0 +1,2 @@
+ppp_io.c:6:7:ppp_io_output_cb	24	static
+ppp_io.c:13:6:ppp_io_input	24	static

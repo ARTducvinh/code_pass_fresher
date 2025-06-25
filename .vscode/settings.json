@@ -5,6 +5,10 @@
         "stdint.h": "c",
         "system_stm32f4xx.h": "c",
         "led.h": "c",
-        "led_logic.h": "c"
+        "led_logic.h": "c",
+        "pppos.h": "c",
+        "pppapi.h": "c",
+        "xutility": "c",
+        "uart.h": "c"
     }
 }

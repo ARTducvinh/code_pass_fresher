@@ -7,9 +7,11 @@
 
 void hardware_init(void) {
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN | RCC_AHB1ENR_GPIOBEN;
-    RCC->APB1ENR |= RCC_APB1ENR_USART2EN | RCC_APB1ENR_TIM2EN; 
+    RCC->APB1ENR |= RCC_APB1ENR_USART2EN | RCC_APB1ENR_TIM2EN;
+    RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
+    RCC->AHB1ENR |= RCC_AHB1ENR_DMA2EN; // <-- Bật clock cho DMA2
+
     timer2_init_1ms();
-    uart_init();
     led_init();
     button_init();
 }

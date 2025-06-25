@@ -1,0 +1,4 @@
+des.c:300:13:des_setkey	32	static
+des.c:372:6:des_setkey_enc	16	static
+des.c:380:6:des_setkey_dec	32	static
+des.c:396:6:des_crypt_ecb	48	static

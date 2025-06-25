@@ -46,12 +46,23 @@
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
 								</option>
 								<option id="com.atollic.truestudio.gcc.directories.select.472161459" name="Include path" superClass="com.atollic.truestudio.gcc.directories.select" valueType="includePath">
-									<listOptionValue builtIn="false" value="../src"/>
 									<listOptionValue builtIn="false" value="../Libraries/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../Libraries/Device/STM32F4xx/Include"/>
 									<listOptionValue builtIn="false" value="../Libraries/STM32F4xx_StdPeriph_Driver/inc"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/hardware}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/middle}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/gsm}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/ppp_net}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/ppp_net/arch}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/core/ipv4}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/netif/ppp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/lwip}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif/ppp}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.common_options.target.endianess.1209835105" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.mcpu.1437116774" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F401CC" valueType="enumerated"/>
@@ -84,6 +95,30 @@
 									<listOptionValue builtIn="false" value="../Libraries/STM32F4xx_StdPeriph_Driver/inc"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/hardware}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/middle}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/core/ipv4}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/netif/ppp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/lwip}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif/ppp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/api}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/apps}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/netif}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/netif/ppp/polarssl}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/compat}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/compat/posix}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/compat/posix/arpa}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/compat/posix/net}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/compat/posix/sys}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/compat/stdc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/lwip/apps}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/lwip/priv}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/lwip/prot}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif/ppp/polarssl}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/ppp_net}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/ppp_net/arch}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.common_options.target.endianess.615900404" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.mcpu.776899973" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F401CC" valueType="enumerated"/>
@@ -111,6 +146,46 @@
 							</tool>
 							<tool id="com.atollic.truestudio.ar.base.1814159421" name="Archiver" superClass="com.atollic.truestudio.ar.base"/>
 							<tool id="com.atollic.truestudio.exe.debug.toolchain.secoutput.2018060598" name="Other" superClass="com.atollic.truestudio.exe.debug.toolchain.secoutput"/>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="com.atollic.truestudio.exe.debug.495883512.1630992100" name="/" resourcePath="src">
+						<toolChain id="com.atollic.truestudio.exe.debug.toolchain.1594351601" name="Atollic ARM Tools" superClass="com.atollic.truestudio.exe.debug.toolchain" unusedChildren="">
+							<option id="com.atollic.truestudio.general.runtimelib.1036707817.1793541519" name="Runtime Library" superClass="com.atollic.truestudio.general.runtimelib.1036707817"/>
+							<option id="com.atollic.truestudio.toolchain_options.mcu.770069761.237015521" name="Microcontroller" superClass="com.atollic.truestudio.toolchain_options.mcu.770069761"/>
+							<option id="com.atollic.truestudio.toolchain_options.vendor.1572145558.1322395205" name="Vendor name" superClass="com.atollic.truestudio.toolchain_options.vendor.1572145558"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.atollic.truestudio.exe.debug.toolchain.platform" isAbstract="false" name="Debug platform" osList="all" superClass="com.atollic.truestudio.exe.debug.toolchain.platform"/>
+							<tool id="com.atollic.truestudio.exe.debug.toolchain.as.1081521754" name="Assembler" superClass="com.atollic.truestudio.exe.debug.toolchain.as.1486775852">
+								<inputType id="com.atollic.truestudio.as.input.902629334" name="Input" superClass="com.atollic.truestudio.as.input"/>
+							</tool>
+							<tool id="com.atollic.truestudio.exe.debug.toolchain.gcc.1617238313" name="C Compiler" superClass="com.atollic.truestudio.exe.debug.toolchain.gcc.1483884821">
+								<option id="com.atollic.truestudio.gcc.directories.select.1667137066" name="Include path" superClass="com.atollic.truestudio.gcc.directories.select" valueType="includePath">
+									<listOptionValue builtIn="false" value="../Libraries/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="../Libraries/Device/STM32F4xx/Include"/>
+									<listOptionValue builtIn="false" value="../Libraries/STM32F4xx_StdPeriph_Driver/inc"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/hardware}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/middle}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/gsm}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/ppp_net}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/ppp_net/arch}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/core}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/core/ipv4}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/netif/ppp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/lwip}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif/ppp}&quot;"/>
+								</option>
+								<inputType id="com.atollic.truestudio.gcc.input.2138300427" superClass="com.atollic.truestudio.gcc.input"/>
+							</tool>
+							<tool id="com.atollic.truestudio.exe.debug.toolchain.ld.1103595840" name="C Linker" superClass="com.atollic.truestudio.exe.debug.toolchain.ld.1455781431"/>
+							<tool id="com.atollic.truestudio.exe.debug.toolchain.gpp.382801703" name="C++ Compiler" superClass="com.atollic.truestudio.exe.debug.toolchain.gpp.2146731846">
+								<inputType id="com.atollic.truestudio.gpp.input.1109215649" superClass="com.atollic.truestudio.gpp.input"/>
+							</tool>
+							<tool id="com.atollic.truestudio.exe.debug.toolchain.ldcc.1935756909" name="C++ Linker" superClass="com.atollic.truestudio.exe.debug.toolchain.ldcc.1968376475"/>
+							<tool id="com.atollic.truestudio.ar.base.1922243432" name="Archiver" superClass="com.atollic.truestudio.ar.base.1814159421"/>
+							<tool id="com.atollic.truestudio.exe.debug.toolchain.secoutput.174009804" name="Other" superClass="com.atollic.truestudio.exe.debug.toolchain.secoutput.2018060598"/>
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
@@ -242,7 +317,14 @@
 		<project id="src_code.com.atollic.truestudio.exe.2030810578" name="Executable" projectType="com.atollic.truestudio.exe"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/src_code"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/src_code"/>
+		</configuration>
+	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>

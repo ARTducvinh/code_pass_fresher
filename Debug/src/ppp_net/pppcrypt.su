@@ -1,0 +1,2 @@
+pppcrypt.c:41:15:pppcrypt_get_7bits	24	static
+pppcrypt.c:55:6:pppcrypt_56_to_64_bit_key	24	static

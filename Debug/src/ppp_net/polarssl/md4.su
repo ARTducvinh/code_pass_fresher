@@ -1,0 +1,5 @@
+md4.c:75:6:md4_starts	16	static
+md4.c:86:13:md4_process	96	static
+md4.c:192:6:md4_update	32	static
+md4.c:244:6:md4_finish	40	static
+md4.c:272:6:md4	112	static

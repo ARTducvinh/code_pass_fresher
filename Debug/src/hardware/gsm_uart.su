@@ -1,0 +1,9 @@
+core_cm4.h:1452:22:NVIC_EnableIRQ	16	static
+gsm_uart.c:24:13:sim_uart_gpio_manual_init	4	static
+gsm_uart.c:43:13:sim_pwkey_gpio_init	4	static
+gsm_uart.c:53:6:gsm_uart_power_on	8	static
+gsm_uart.c:62:6:gsm_uart_reset	8	static
+gsm_uart.c:77:6:gsm_uart_init	8	static
+gsm_uart.c:86:13:gsm_send_byte	16	static
+gsm_uart.c:92:6:gsm_uart_send	16	static
+gsm_uart.c:100:6:USART1_IRQHandler	528	static

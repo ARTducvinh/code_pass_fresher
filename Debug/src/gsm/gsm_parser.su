@@ -1,0 +1,7 @@
+gsm_parser.c:5:6:gsm_parser_trim	24	static
+gsm_parser.c:21:6:gsm_parser_is_empty_line	16	static
+gsm_parser.c:31:6:gsm_parser_is_ok	48	static
+gsm_parser.c:43:6:gsm_parser_is_sim_error	80	static
+gsm_parser.c:58:6:gsm_parser_is_error	80	static
+gsm_parser.c:74:6:gsm_parser_is_connect	80	static
+gsm_parser.c:87:6:gsm_parser_has_prefix	80	static

@@ -1,0 +1,3 @@
+gsm_state.c:8:20:gsm_state_str	16	static
+gsm_state.c:24:13:gsm_log_state	80	static
+gsm_state.c:37:13:gsm_state_handle_response	16	static
