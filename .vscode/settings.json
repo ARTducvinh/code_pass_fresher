@@ -9,6 +9,13 @@
         "pppos.h": "c",
         "pppapi.h": "c",
         "xutility": "c",
-        "uart.h": "c"
+        "uart.h": "c",
+        "gsm_parser.h": "c",
+        "gsm_state.h": "c",
+        "string.h": "c",
+        "ctype.h": "c",
+        "stdio.h": "c",
+        "stdbool.h": "c",
+        "hardware.h": "c"
     }
 }

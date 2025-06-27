@@ -89,6 +89,7 @@ typedef struct {
 #define SIM_PWKEY_Pin GPIO_Pin_8
 #define SIM_PWKEY_GPIO GPIOA
 
+
 #define SIM_PWKEY_LOW() GPIO_SetBits(SIM_PWKEY_GPIO, SIM_PWKEY_Pin)
 #define SIM_PWKEY_HIGH() GPIO_ResetBits(SIM_PWKEY_GPIO, SIM_PWKEY_Pin)
 
@@ -108,6 +109,7 @@ void hw_led_config(uint8_t pin);
 void hw_led_write(uint8_t pin, uint8_t state);
 void switch_init(void);
 uint8_t switch_read(uint8_t index);
+void gsm_module_power_cycle(void);
 
 #ifdef __cplusplus
 }

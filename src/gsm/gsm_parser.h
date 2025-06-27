@@ -7,12 +7,44 @@ extern "C" {
 
 #include <stdbool.h>
 
-bool gsm_parser_is_empty_line(const char* resp);
-bool gsm_parser_is_ok(const char* resp);
-bool gsm_parser_is_sim_error(const char* resp);
-bool gsm_parser_is_error(const char* resp);
-bool gsm_parser_is_connect(const char* resp);
-bool gsm_parser_has_prefix(const char* resp, const char* prefix);
+// Hàm phân tích phản hồi cho lệnh "AT"
+bool parse_response_at(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "ATI"
+bool parse_response_ati(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "AT+CPIN?"
+bool parse_response_at_cpin(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "AT+CSQ"
+bool parse_response_at_csq(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "AT+CEREG?"
+bool parse_response_at_cereg(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGDCONT"
+bool parse_response_at_cgdcont(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGAUTH"
+bool parse_response_at_cgauth(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGACT"
+bool parse_response_at_cgact(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGPADDR"
+bool parse_response_at_cgpaddr(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "ATD*99#"
+bool parse_response_atd99(const char* response);
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGDATA"
+bool parse_response_at_cgdata(const char* response);
+
+// // Hàm phân tích phản hồi cho lệnh "+++"
+// bool parse_response_plus(const char* response);
+
+// // Hàm phân tích phản hồi cho lệnh "ATH"
+// bool parse_response_ath(const char* response);
 
 #ifdef __cplusplus
 }

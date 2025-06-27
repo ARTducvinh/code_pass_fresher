@@ -1,8 +1,9 @@
-hardware.c:8:6:hardware_init	8	static
-hardware.c:18:10:sys_get_tick_ms	4	static
-hardware.c:21:10:button_read	16	static
-hardware.c:24:6:button_config	16	static
-hardware.c:27:6:hw_led_config	16	static
-hardware.c:30:6:hw_led_write	16	static
-hardware.c:33:6:switch_init	4	static
-hardware.c:36:9:switch_read	16	static
+hardware.c:11:6:hardware_init	8	static
+hardware.c:25:10:sys_get_tick_ms	4	static
+hardware.c:29:10:button_read	16	static
+hardware.c:33:6:button_config	16	static
+hardware.c:36:6:hw_led_config	16	static
+hardware.c:39:6:hw_led_write	16	static
+hardware.c:42:6:switch_init	4	static
+hardware.c:45:9:switch_read	16	static
+hardware.c:49:6:gsm_module_power_cycle	16	static

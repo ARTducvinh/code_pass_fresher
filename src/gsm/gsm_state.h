@@ -1,16 +1,18 @@
 #ifndef GSM_STATE_H
 #define GSM_STATE_H
-
-#include "gsm.h"
 #include <stdbool.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// Hàm xử lý trạng thái dựa trên phản hồi
-gsm_state_t gsm_state_handle_response(gsm_state_t current, const char* resp);
+typedef enum {
+    GSM_STATE_INITIALIZING,  
+    GSM_STATE_NETWORK_READY, 
+    GSM_STATE_CONNECTED      
+} gsm_state_t;
 
+// Biến kiểm tra mode PPP
+extern bool ppp_mode;
 #ifdef __cplusplus
 }
 #endif

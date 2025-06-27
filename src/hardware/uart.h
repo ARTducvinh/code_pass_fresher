@@ -8,19 +8,34 @@
 extern "C" {
 #endif
 
+// Khởi tạo UART
 void uart_init_all(void);
-void uart_log(const char* msg);
-void usart1_control(bool enable);
-void usart1_hw_uart_send_raw(const uint8_t* raw, uint32_t length);
-void usart1_start_dma_rx(void);
-void uart_poll_dma_rx();
-void uart_enable_usart1_idle_irq(void);
-void gsm_hw_layer_uart_fill_rx(uint8_t *data, uint32_t length);
-void uart_set_ppp_mode(bool enable);
 
+// Gửi log qua UART
+void uart_log(const char* msg);
+
+// Gửi dữ liệu thô qua USART1
+void uart1_send_raw(const uint8_t* raw, uint32_t length);
+
+// Bật ngắt IDLE cho USART1
+void uart_enable_uart1_idle_irq(void);
+
+// Xử lý dữ liệu nhận được từ UART
+void gsm_hw_layer_uart_fill_rx(uint8_t *data, uint32_t length);
+
+void uart_disable_uart1_irq(void);
+
+void usart1_dma_rx_check(void);
+
+void uart1_poll(void);
+
+void uart_log_hex(const uint8_t* data, uint32_t length);
+
+void restart_dma2_stream2(void);
+// Biến toàn cục
 extern volatile bool rx_line_ready;
-extern uint8_t rx_buffer[128];
-extern uint8_t tx_buffer[128];
+extern uint8_t rx_buffer[128];extern uint8_t rx_buffer[128];
+extern volatile bool gsm_ppp_mode;
 
 #ifdef __cplusplus
 }

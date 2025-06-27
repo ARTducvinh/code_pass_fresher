@@ -25,4 +25,7 @@
 #define IP_REASSEMBLY 0
 #define IP_FRAG 0
 #define LWIP_ARP 0
+#define NO_SYS 0
+#define SYS_LIGHTWEIGHT_PROT 1
+
 // ... và các option khác giảm tối đa

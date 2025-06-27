@@ -1,97 +1,98 @@
 #include "gsm_parser.h"
+#include "gsm_commands.h"
+#include "uart.h"
 #include <string.h>
-#include <ctype.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include "gsm_state.h"
 
-void gsm_parser_trim(char* s) {
-    if (!s) return;
 
-    // Trim đầu
-    char* start = s;
-    while (*start && isspace((unsigned char)*start)) start++;
-
-    // Trim cuối
-    char* end = start + strlen(start);
-    while (end > start && isspace((unsigned char)*(end - 1))) end--;
-    *end = '\0';
-
-    // Nếu có trim đầu, dời chuỗi
-    if (start != s) memmove(s, start, end - start + 1);
+// Hàm phân tích phản hồi cho lệnh "AT"
+bool parse_response_at(const char* response) {
+    uart_log(response);
+    return strstr(response, "OK") != NULL;
 }
 
-bool gsm_parser_is_empty_line(const char* resp) {
-    if (!resp) return true;
+// Hàm phân tích phản hồi cho lệnh "ATI"
+bool parse_response_ati(const char* response) {
+    uart_log(response);
+    return strstr(response, "Manufacturer: INCORPORATED") != NULL; // Dòng dữ liệu chính
+}
 
-    while (*resp) {
-        if (!isspace((unsigned char)*resp)) return false;
-        resp++;
+// Hàm phân tích phản hồi cho lệnh "AT+CPIN?"
+bool parse_response_at_cpin(const char* response) {
+    uart_log(response);
+    return strstr(response, "+CPIN: READY") != NULL; // Dòng dữ liệu chính
+}
+
+// Hàm phân tích phản hồi cho lệnh "AT+CSQ"
+bool parse_response_at_csq(const char* response) {
+    uart_log(response);
+    return strstr(response, "+CSQ:") != NULL; // Dòng dữ liệu chính
+}
+
+// Hàm phân tích phản hồi cho lệnh "AT+CEREG?"
+bool parse_response_at_cereg(const char* response) {
+    uart_log(response);
+    return strstr(response, "+CEREG:") != NULL; // Dòng dữ liệu chính
+}
+
+// Hàm phân tích phản hồi cho lệnh "AT+COPS"
+bool parse_response_at_cops(const char* response) {
+    uart_log(response);
+    return strstr(response, "+COPS=0") != NULL; // Dòng dữ liệu chính
+}
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGDCONT"
+bool parse_response_at_cgdcont(const char* response) {
+    uart_log(response);
+    return strstr(response, "OK") != NULL; // Dòng xác nhận
+}
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGAUTH"
+bool parse_response_at_cgauth(const char* response) {
+    uart_log(response);
+    return strstr(response, "OK") != NULL; // Dòng xác nhận
+}
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGACT"
+bool parse_response_at_cgact(const char* response) {
+    uart_log(response);
+    return strstr(response, "OK") != NULL; // Dòng xác nhận
+}
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGPADDR"
+bool parse_response_at_cgpaddr(const char* response) {
+    uart_log(response);
+    return strstr(response, "+CGPADDR: 1,") != NULL; // Dòng dữ liệu chính
+}
+
+// Hàm phân tích phản hồi cho lệnh "AT+CGDATA"
+bool parse_response_at_cgdata(const char* response) {
+    uart_log(response);
+    return strstr(response, "CONNECT") != NULL; // Dòng dữ liệu chính
+}
+
+// Hàm phân tích phản hồi cho lệnh "ATD*99#"
+bool parse_response_atd99(const char* response) {
+    uart_log(response);
+    if (strstr(response, "CONNECT") != NULL) {
+        ppp_mode = true;
+        uart_disable_uart1_irq();
+        restart_dma2_stream2(); // Khởi động lại DMA để nhận dữ liệu PPP
+        return true;
     }
-    return true;
+    return false;
 }
 
-bool gsm_parser_is_ok(const char* resp) {
-    if (!resp) return false;
+// // Hàm phân tích phản hồi cho lệnh "+++"
+// bool parse_response_plus(const char* response) {
+//     uart_log(response);
+//     return strstr(response, "OK") != NULL; // Dòng xác nhận
+// }
 
-    char buf[32];
-    strncpy(buf, resp, sizeof(buf) - 1);
-    buf[sizeof(buf) - 1] = '\0';
-
-    gsm_parser_trim(buf);
-
-    return (strcmp(buf, "OK") == 0);
-}
-
-bool gsm_parser_is_sim_error(const char* resp) {
-    if (!resp) return false;
-
-    char buf[64];
-    strncpy(buf, resp, sizeof(buf) - 1);
-    buf[sizeof(buf) - 1] = '\0';
-
-    gsm_parser_trim(buf);
-
-    return strstr(buf, "SIM not inserted") ||
-           strstr(buf, "+CME ERROR: 10") ||
-           strstr(buf, "SIM failure") ||
-           strstr(buf, "SIM PIN required");
-}
-
-bool gsm_parser_is_error(const char* resp) {
-    if (!resp || gsm_parser_is_empty_line(resp)) return false;
-
-    if (gsm_parser_is_ok(resp)) return false;
-
-    char buf[64];
-    strncpy(buf, resp, sizeof(buf) - 1);
-    buf[sizeof(buf) - 1] = '\0';
-
-    gsm_parser_trim(buf);
-
-    return strstr(buf, "ERROR") ||
-           strstr(buf, "+CME ERROR") ||
-           strstr(buf, "+CMS ERROR");
-}
-
-bool gsm_parser_is_connect(const char* resp) {
-    if (!resp) return false;
-
-    char buf[64];
-    strncpy(buf, resp, sizeof(buf) - 1);
-    buf[sizeof(buf) - 1] = '\0';
-
-    gsm_parser_trim(buf);
-
-    return strstr(buf, "CONNECT") ||
-           strstr(buf, "+CGEV: EPS PDN ACT");
-}
-
-bool gsm_parser_has_prefix(const char* resp, const char* prefix) {
-    if (!resp || !prefix) return false;
-
-    char buf[64];
-    strncpy(buf, resp, sizeof(buf) - 1);
-    buf[sizeof(buf) - 1] = '\0';
-
-    gsm_parser_trim(buf);
-
-    return strncmp(buf, prefix, strlen(prefix)) == 0;
-}
+// // Hàm phân tích phản hồi cho lệnh "ATH"
+// bool parse_response_ath(const char* response) {
+//     uart_log(response);
+//     return strstr(response, "OK") != NULL; // Dòng xác nhận
+// }

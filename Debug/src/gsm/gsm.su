@@ -1,8 +1,2 @@
-gsm.c:21:20:gsm_get_response	8	static
-gsm.c:41:6:gsm_init	4	static
-gsm.c:54:6:gsm_send_command	16	static
-gsm.c:59:13:gsm_get_state	4	static
-gsm.c:64:6:gsm_is_ppp_mode	4	static
-gsm.c:69:6:gsm_set_error	4	static
-gsm.c:75:13:gsm_update_led_mode	16	static
-gsm.c:97:6:gsm_process	24	static
+gsm.c:13:6:send_gsm_command_by_index	24	static
+gsm.c:20:6:send_all_gsm_commands_with_check	360	static

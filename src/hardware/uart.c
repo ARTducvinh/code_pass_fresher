@@ -1,21 +1,22 @@
 #include "uart.h"
 #include "hardware.h"
 #include "stm32f4xx.h"
+#include "core_cm4.h"
 #include <stdbool.h>
 #include <string.h>
-#include "ppp_net/ppp_net.h"
+#include "uart_line_queue.h"
+#include "gsm_state.h"
 #include "netif/ppp/pppos.h"
+#include <stdint.h>
+#include <stdio.h>
+extern ppp_pcb *ppp;
 
 #define UART1_RX_BUFFER_SIZE 256
 
-uint8_t m_usart1_rx_buffer[UART1_RX_BUFFER_SIZE];
-volatile uint32_t m_old_usart1_dma_rx_pos = 0;
+uint8_t m_uart1_rx_buffer[UART1_RX_BUFFER_SIZE];
+volatile uint32_t m_old_uart1_dma_rx_pos = 0;
 
-uint8_t rx_buffer[128];
 volatile bool rx_line_ready = false;
-
-volatile bool gsm_ppp_mode = false;
-extern ppp_pcb *ppp;
 
 void uart_init_all(void)
 {
@@ -25,7 +26,7 @@ void uart_init_all(void)
     GPIOA->MODER &= ~((3U << (9 * 2)) | (3U << (10 * 2)));
     GPIOA->MODER |= ((2U << (9 * 2)) | (2U << (10 * 2)));
     GPIOA->AFR[1] &= ~((0xF << (4 * 1)) | (0xF << (4 * 2)));
-    GPIOA->AFR[1] |= ((7U << (4 * 1)) | (7U << (4 * 2))); 
+    GPIOA->AFR[1] |= ((7U << (4 * 1)) | (7U << (4 * 2)));
 
     USART1->BRR = 16000000 / 115200;
     USART1->CR1 = USART_CR1_TE | USART_CR1_RE | USART_CR1_UE;
@@ -35,7 +36,7 @@ void uart_init_all(void)
     GPIOA->MODER &= ~((3U << (2 * 2)) | (3U << (3 * 2)));
     GPIOA->MODER |= ((2U << (2 * 2)) | (2U << (3 * 2)));
     GPIOA->AFR[0] &= ~((0xF << (4 * 2)) | (0xF << (4 * 3)));
-    GPIOA->AFR[0] |= ((7U << (4 * 2)) | (7U << (4 * 3))); 
+    GPIOA->AFR[0] |= ((7U << (4 * 2)) | (7U << (4 * 3)));
 
     USART2->BRR = 16000000 / 115200;
     USART2->CR1 = USART_CR1_TE | USART_CR1_RE | USART_CR1_UE;
@@ -46,7 +47,7 @@ void uart_init_all(void)
     while (DMA2_Stream2->CR & DMA_SxCR_EN);
 
     DMA2_Stream2->PAR  = (uint32_t)&USART1->DR;
-    DMA2_Stream2->M0AR = (uint32_t)m_usart1_rx_buffer;
+    DMA2_Stream2->M0AR = (uint32_t)m_uart1_rx_buffer;
     DMA2_Stream2->NDTR = UART1_RX_BUFFER_SIZE;
 
     DMA2_Stream2->CR =
@@ -61,7 +62,7 @@ void uart_init_all(void)
     DMA2_Stream2->CR |= DMA_SxCR_EN;
 
     NVIC_EnableIRQ(DMA2_Stream2_IRQn);
-    uart_enable_usart1_idle_irq();
+    uart_enable_uart1_idle_irq();
 }
 
 void uart_log(const char* msg)
@@ -78,8 +79,9 @@ void uart_log(const char* msg)
     USART2->DR = '\n';
 }
 
-void usart1_hw_uart_send_raw(const uint8_t* raw, uint32_t length)
+void uart1_send_raw(const uint8_t* raw, uint32_t length)
 {
+    //uart_log(raw);
     for (uint32_t i = 0; i < length; i++)
     {
         while (!(USART1->SR & USART_SR_TXE)); 
@@ -88,56 +90,35 @@ void usart1_hw_uart_send_raw(const uint8_t* raw, uint32_t length)
     while (!(USART1->SR & USART_SR_TC)); 
 }
 
-void uart_set_ppp_mode(bool enable)
-{
-    gsm_ppp_mode = enable;
-    if (enable) {
-        uart_log("UART: Switched to PPP data mode");
-    } else {
-        uart_log("UART: Switched to AT command mode");
-    }
-}
-
 void usart1_dma_rx_check(void)
 {
     uint32_t pos = UART1_RX_BUFFER_SIZE - DMA2_Stream2->NDTR;
-    if (pos != m_old_usart1_dma_rx_pos)
+    if (pos != m_old_uart1_dma_rx_pos)
     {
-        if (gsm_ppp_mode && ppp != NULL) {
-            if (pos > m_old_usart1_dma_rx_pos) {
-                pppos_input(ppp, &m_usart1_rx_buffer[m_old_usart1_dma_rx_pos], pos - m_old_usart1_dma_rx_pos);
-            } else {
-                pppos_input(ppp, &m_usart1_rx_buffer[m_old_usart1_dma_rx_pos], UART1_RX_BUFFER_SIZE - m_old_usart1_dma_rx_pos);
-                if (pos > 0)
-                    pppos_input(ppp, &m_usart1_rx_buffer[0], pos);
-            }
+        if (pos > m_old_uart1_dma_rx_pos) {
+            gsm_hw_layer_uart_fill_rx(&m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], pos - m_old_uart1_dma_rx_pos);
         } else {
-            if (pos > m_old_usart1_dma_rx_pos) {
-                gsm_hw_layer_uart_fill_rx(&m_usart1_rx_buffer[m_old_usart1_dma_rx_pos], pos - m_old_usart1_dma_rx_pos);
-            } else {
-                gsm_hw_layer_uart_fill_rx(&m_usart1_rx_buffer[m_old_usart1_dma_rx_pos], UART1_RX_BUFFER_SIZE - m_old_usart1_dma_rx_pos);
-                if (pos > 0)
-                    gsm_hw_layer_uart_fill_rx(&m_usart1_rx_buffer[0], pos);
-            }
+            gsm_hw_layer_uart_fill_rx(&m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], UART1_RX_BUFFER_SIZE - m_old_uart1_dma_rx_pos);
+            if (pos > 0)
+                gsm_hw_layer_uart_fill_rx(&m_uart1_rx_buffer[0], pos);
         }
-        m_old_usart1_dma_rx_pos = pos;
-        if (m_old_usart1_dma_rx_pos == UART1_RX_BUFFER_SIZE)
-            m_old_usart1_dma_rx_pos = 0;
+        m_old_uart1_dma_rx_pos = pos;
+        if (m_old_uart1_dma_rx_pos == UART1_RX_BUFFER_SIZE)
+            m_old_uart1_dma_rx_pos = 0;
     }
 }
 
 void gsm_hw_layer_uart_fill_rx(uint8_t *data, uint32_t length)
 {
-    static uint8_t line_buf[128];
+    static uint8_t line_buf[UART_LINE_MAX_LEN];
     static uint16_t line_idx = 0;
     for (uint32_t i = 0; i < length; i++) {
-        if (line_idx < sizeof(line_buf) - 1) {
+        if (line_idx < UART_LINE_MAX_LEN - 1) {
             line_buf[line_idx++] = data[i];
             if (data[i] == '\n' || data[i] == '\r') {
                 if (line_idx > 1) {
                     line_buf[line_idx] = 0;
-                    memcpy(rx_buffer, line_buf, line_idx + 1);
-                    rx_line_ready = true;
+                    uart_line_queue_push((char*)line_buf); // Đẩy dòng vào queue mới
                 }
                 line_idx = 0;
             }
@@ -156,12 +137,7 @@ void DMA2_Stream2_IRQHandler(void)
     }
 }
 
-void uart_poll_dma_rx(void)
-{
-    usart1_dma_rx_check();
-}
-
-void uart_enable_usart1_idle_irq(void)
+void uart_enable_uart1_idle_irq(void)
 {
     USART1->CR1 |= USART_CR1_IDLEIE;
     NVIC_EnableIRQ(USART1_IRQn);
@@ -176,4 +152,81 @@ void USART1_IRQHandler(void)
         (void)tmp;
         usart1_dma_rx_check();
     }
+}
+
+void uart1_poll_ppp_mode_rx(void)
+{
+    uint32_t pos = UART1_RX_BUFFER_SIZE - DMA2_Stream2->NDTR;
+    if (pos != m_old_uart1_dma_rx_pos)
+    {
+        if (ppp != NULL) {
+            if (pos > m_old_uart1_dma_rx_pos) {
+                pppos_input(ppp, &m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], pos - m_old_uart1_dma_rx_pos);
+            } else {
+                pppos_input(ppp, &m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], UART1_RX_BUFFER_SIZE - m_old_uart1_dma_rx_pos);
+                if (pos > 0) {
+                    pppos_input(ppp, &m_uart1_rx_buffer[0], pos);
+                }
+            }
+        }
+
+        m_old_uart1_dma_rx_pos = pos;
+        if (m_old_uart1_dma_rx_pos == UART1_RX_BUFFER_SIZE)
+            m_old_uart1_dma_rx_pos = 0;
+    }
+}
+
+void uart1_poll(void)
+{
+    if (ppp_mode == true) {
+        uart1_poll_ppp_mode_rx();
+    }
+}
+
+//đóng ngắt UART1 sau khi chuyển sang PPP mode
+void uart_disable_uart1_irq(void)
+{
+    USART1->CR1 &= ~USART_CR1_IDLEIE; // Tắt ngắt IDLE
+    NVIC_DisableIRQ(USART1_IRQn);    // Vô hiệu hóa ngắt USART1
+    uart_log("UART1 IRQ disabled");
+}
+
+void uart_log_hex(const uint8_t* data, uint32_t length)
+{
+    char buffer[49]; // 16 bytes * 3 (hex + space) + 1 (null terminator)
+    uint32_t i;
+
+    for (i = 0; i < length; i++) {
+        if (i % 16 == 0) {
+            if (i > 0) {
+                uart_log(buffer); // Log the previous line
+            }
+            snprintf(buffer, sizeof(buffer), ""); // Reset buffer
+        }
+        snprintf(buffer + (i % 16) * 3, 4, "%02X ", data[i]);
+    }
+
+    if (i % 16 != 0) {
+        uart_log(buffer); // Log the remaining data
+    }
+}
+
+void restart_dma2_stream2(void) {
+    DMA2_Stream2->CR &= ~DMA_SxCR_EN;
+    while (DMA2_Stream2->CR & DMA_SxCR_EN); // Đợi DMA disable hoàn toàn
+
+    DMA2_Stream2->PAR  = (uint32_t)&USART1->DR;
+    DMA2_Stream2->M0AR = (uint32_t)m_uart1_rx_buffer;
+    DMA2_Stream2->NDTR = UART1_RX_BUFFER_SIZE;
+
+    DMA2_Stream2->CR =
+        (4U << 25) |
+        DMA_SxCR_MINC |
+        DMA_SxCR_CIRC |
+        (0 << 6) |
+        (0 << 13) |
+        (0 << 11) |
+        (0 << 16);
+
+    DMA2_Stream2->CR |= DMA_SxCR_EN;
 }

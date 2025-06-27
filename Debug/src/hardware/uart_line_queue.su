@@ -1,0 +1,4 @@
+uart_line_queue.c:9:6:uart_line_queue_init	4	static
+uart_line_queue.c:16:6:uart_line_queue_push	16	static
+uart_line_queue.c:26:6:uart_line_queue_pop	16	static
+uart_line_queue.c:34:9:uart_line_queue_count_get	4	static
