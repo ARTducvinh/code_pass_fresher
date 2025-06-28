@@ -1,10 +1,11 @@
 #include "gsm_parser.h"
 #include "gsm_commands.h"
-#include "uart.h"
+#include "hardware/uart.h"
 #include <string.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include "gsm_state.h"
+#include "ppp_net/ppp_connection.h" // Thêm header để truy cập gsm_ppp_mode
 
 
 // Hàm phân tích phản hồi cho lệnh "AT"
@@ -77,9 +78,15 @@ bool parse_response_at_cgdata(const char* response) {
 bool parse_response_atd99(const char* response) {
     uart_log(response);
     if (strstr(response, "CONNECT") != NULL) {
-        // ppp_mode = true;
-        //uart_disable_uart1_irq();
-        restart_dma2_stream2(); // Khởi động lại DMA để nhận dữ liệu PPP
+        // Khi nhận được "CONNECT", chuyển sang chế độ PPP
+        // Cờ này sẽ được sử dụng trong uart1_poll() để chuyển dữ liệu đến lwIP
+        gsm_ppp_mode = true;
+        uart_log("Switching to PPP mode.");
+        
+        // Xóa bộ đệm DMA và bắt đầu nhận dữ liệu PPP.
+        // Điều này đảm bảo rằng không có dữ liệu AT command cũ nào bị xử lý như dữ liệu PPP.
+        restart_dma2_stream2(); 
+        
         return true;
     }
     return false;

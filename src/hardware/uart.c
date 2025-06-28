@@ -7,11 +7,9 @@
 #include "uart_line_queue.h"
 #include "gsm_state.h"
 #include "netif/ppp/pppos.h"
+#include "ppp_net/ppp_connection.h" // Thêm file header này
 #include <stdint.h>
 #include <stdio.h>
-
-extern ppp_pcb *ppp;
-extern bool ppp_mode;
 
 #define UART1_RX_BUFFER_SIZE 256
 
@@ -111,36 +109,48 @@ void gsm_hw_layer_uart_fill_rx(uint8_t *data, uint32_t length)
 
 void uart1_poll(void)
 {
-    if (!rx_line_ready)
+    // Thoát sớm nếu không có dữ liệu mới
+    if (!rx_line_ready) {
         return;
-
+    }
     rx_line_ready = false;
 
+    // Lấy vị trí hiện tại của con trỏ ghi DMA
     uint32_t pos = UART1_RX_BUFFER_SIZE - DMA2_Stream2->NDTR;
 
-    if (pos != m_old_uart1_dma_rx_pos) {
-        if (ppp_mode && ppp != NULL) {
-            if (pos > m_old_uart1_dma_rx_pos) {
-                pppos_input(ppp, &m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], pos - m_old_uart1_dma_rx_pos);
-            } else {
-                pppos_input(ppp, &m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], UART1_RX_BUFFER_SIZE - m_old_uart1_dma_rx_pos);
-                if (pos > 0)
-                    pppos_input(ppp, &m_uart1_rx_buffer[0], pos);
-            }
+    // Thoát nếu không có dữ liệu mới được ghi
+    if (pos == m_old_uart1_dma_rx_pos) {
+        return;
+    }
+
+    // Sử dụng biến gsm_ppp_mode thay vì ppp_mode
+    if (gsm_ppp_mode && ppp != NULL) {
+        if (pos > m_old_uart1_dma_rx_pos) {
+            pppos_input(ppp, &m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], pos - m_old_uart1_dma_rx_pos);
         } else {
-            if (pos > m_old_uart1_dma_rx_pos) {
-                gsm_hw_layer_uart_fill_rx(&m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], pos - m_old_uart1_dma_rx_pos);
-            } else {
-                gsm_hw_layer_uart_fill_rx(&m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], UART1_RX_BUFFER_SIZE - m_old_uart1_dma_rx_pos);
-                if (pos > 0)
-                    gsm_hw_layer_uart_fill_rx(&m_uart1_rx_buffer[0], pos);
+            // Xử lý trường hợp buffer bị tràn (wrap-around)
+            pppos_input(ppp, &m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], UART1_RX_BUFFER_SIZE - m_old_uart1_dma_rx_pos);
+            if (pos > 0) {
+                pppos_input(ppp, &m_uart1_rx_buffer[0], pos);
             }
         }
-
-        m_old_uart1_dma_rx_pos = pos;
-        if (m_old_uart1_dma_rx_pos == UART1_RX_BUFFER_SIZE)
-            m_old_uart1_dma_rx_pos = 0;
+    } else {
+        // Chế độ AT command
+        if (pos > m_old_uart1_dma_rx_pos) {
+            gsm_hw_layer_uart_fill_rx(&m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], pos - m_old_uart1_dma_rx_pos);
+        } else {
+            // Xử lý trường hợp buffer bị tràn (wrap-around)
+            gsm_hw_layer_uart_fill_rx(&m_uart1_rx_buffer[m_old_uart1_dma_rx_pos], UART1_RX_BUFFER_SIZE - m_old_uart1_dma_rx_pos);
+            if (pos > 0) {
+                gsm_hw_layer_uart_fill_rx(&m_uart1_rx_buffer[0], pos);
+            }
+        }
     }
+
+    // Cập nhật vị trí cũ cho lần kiểm tra tiếp theo
+    m_old_uart1_dma_rx_pos = pos;
+    if (m_old_uart1_dma_rx_pos == UART1_RX_BUFFER_SIZE)
+        m_old_uart1_dma_rx_pos = 0;
 }
 
 void DMA2_Stream2_IRQHandler(void)

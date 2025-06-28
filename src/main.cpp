@@ -4,7 +4,6 @@
 #include "gsm/gsm.h"
 #include "gsm/gsm_data_layer.h"
 #include "middle/led_logic.h" 
-#include "ppp_net/ppp_net.h"
 #include "ppp_net/ppp_connection.h"
 #include "lwip/tcpip.h"
 #include <stdio.h>

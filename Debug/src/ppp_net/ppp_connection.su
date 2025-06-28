@@ -1,0 +1,5 @@
+ppp_connection.c:23:14:ppp_output_callback	24	static
+ppp_connection.c:30:13:ppp_status_cb	24	static
+ppp_connection.c:53:6:ppp_connection_init	8	static
+ppp_connection.c:71:6:ppp_connection_poll	8	static
+ppp_connection.c:83:6:ppp_connection_close	8	static

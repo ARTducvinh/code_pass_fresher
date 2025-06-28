@@ -8,7 +8,7 @@
 #define PPP_SUPPORT               1
 #define PPPOS_SUPPORT             1
 #define PAP_SUPPORT               1 // Nếu dùng PAP
-#define CHAP_SUPPORT              0
+#define CHAP_SUPPORT              1 // Bật hỗ trợ CHAP để sửa lỗi linker
 #define MSCHAP_SUPPORT            0
 #define VJ_SUPPORT                0
 #define LWIP_STATS                0
@@ -28,4 +28,6 @@
 #define NO_SYS 0
 #define SYS_LIGHTWEIGHT_PROT 1
 
-// ... và các option khác giảm tối đa
+
+// --- Thêm dòng này để bật hỗ trợ MD5 cho PPP ---
+#define LWIP_MD5_SUPPORT           1
