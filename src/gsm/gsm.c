@@ -17,37 +17,42 @@ void send_gsm_command_by_index(int idx) {
 }
 
 // Hàm gửi lần lượt các lệnh, chỉ gửi tiếp khi phản hồi thành công
-void send_all_gsm_commands_with_check(void) {
+void send_all_gsm_commands_with_check(void)
+{
+    static int current_command_index = 0;
+    static uint32_t start_tick = 0;
+    static uint32_t last_send_tick = 0;
+    static bool waiting_for_response = false;
     char response[256];
 
-    for (int i = 0; i < gsm_commands_count; i++) { 
+    if (current_command_index >= gsm_commands_count) {
+        return; // Đã gửi hết lệnh
+    }
+
+    if (!waiting_for_response) {
+        start_tick = timer2_get_tick();
+        last_send_tick = start_tick - 5000;
+        waiting_for_response = true;
+    }
+
+    uint32_t wait_time = gsm_commands[current_command_index].max_response_time_ms;
+    if ((timer2_get_tick() - start_tick) < wait_time) {
+        if ((timer2_get_tick() - last_send_tick) >= 5000) {
+            send_gsm_command_by_index(current_command_index);
+            last_send_tick = timer2_get_tick();
+        }
+        while (uart_line_queue_pop(response)) {
+            if (check_gsm_response_by_index(current_command_index, response)) {
+                waiting_for_response = false;
+                current_command_index++;
+                return; // Chuyển sang lệnh tiếp theo
+            }
+        }
+    } else {
         char log_buf[64];
-        snprintf(log_buf, sizeof(log_buf), "Dang gui lenh case %d: %s", i, gsm_commands[i].command);
-        //uart_log(log_buf);
-
-        uint32_t start_tick = timer2_get_tick();
-        uint32_t wait_time = gsm_commands[i].max_response_time_ms;
-        bool ok = false;
-        uint32_t last_send_tick = start_tick - 5000;
-
-        while ((timer2_get_tick() - start_tick) < wait_time) {
-            if ((timer2_get_tick() - last_send_tick) >= 5000) {
-                send_gsm_command_by_index(i);
-                last_send_tick = timer2_get_tick();
-            }
-            while (uart_line_queue_pop(response)) {
-                if (check_gsm_response_by_index(i, response)) {
-                    ok = true;
-                    break;
-                }
-            }
-            if (ok) break;
-            delay_ms(1);
-        }
-        if (!ok) {
-            snprintf(log_buf, sizeof(log_buf), "Loi khi gui lenh case %d: %s", i, gsm_commands[i].command);
-            uart_log(log_buf);
-            break;
-        }
+        snprintf(log_buf, sizeof(log_buf), "Loi khi gui lenh case %d: %s", current_command_index, gsm_commands[current_command_index].command);
+        uart_log(log_buf);
+        waiting_for_response = false;
+        current_command_index = gsm_commands_count; // Kết thúc gửi lệnh
     }
 }

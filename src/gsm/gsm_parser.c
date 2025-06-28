@@ -34,7 +34,7 @@ bool parse_response_at_csq(const char* response) {
 // Hàm phân tích phản hồi cho lệnh "AT+CEREG?"
 bool parse_response_at_cereg(const char* response) {
     uart_log(response);
-    return strstr(response, "+CEREG:") != NULL; // Dòng dữ liệu chính
+    return strstr(response, "+CEREG: 0,1") != NULL; // Dòng dữ liệu chính
 }
 
 // Hàm phân tích phản hồi cho lệnh "AT+COPS"
@@ -77,8 +77,8 @@ bool parse_response_at_cgdata(const char* response) {
 bool parse_response_atd99(const char* response) {
     uart_log(response);
     if (strstr(response, "CONNECT") != NULL) {
-        ppp_mode = true;
-        uart_disable_uart1_irq();
+        // ppp_mode = true;
+        //uart_disable_uart1_irq();
         restart_dma2_stream2(); // Khởi động lại DMA để nhận dữ liệu PPP
         return true;
     }
