@@ -16,6 +16,7 @@
         "ctype.h": "c",
         "stdio.h": "c",
         "stdbool.h": "c",
-        "hardware.h": "c"
+        "hardware.h": "c",
+        "ppp_connection.h": "c"
     }
 }

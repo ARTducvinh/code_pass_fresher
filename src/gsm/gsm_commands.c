@@ -7,7 +7,7 @@ const gsm_command_t gsm_commands[] = {
     {"AT+CSQ", "AT+CSQ", "+CSQ: <rssi>,<ber>", 1000}, // Kiểm tra chất lượng tín hiệu
     {"AT+CEREG?", "AT+CEREG?", "+CEREG: <n>,<stat>", 20000}, // Kiểm tra đăng ký mạng LTE
     {"AT+COPS", "AT+COPS=0", "+COPS: 0", 60000},     // Chọn mạng tự động
-    {"AT+CGDCONT", "AT+CGDCONT=1,\"IP\",\"m3-world\"", "OK", 9000}, // Cấu hình PDP với APN mobifone
+    {"AT+CGDCONT", "AT+CGDCONT=1,\"IP\",\"v-internet\"", "OK", 9000}, // Cấu hình PDP với APN mobifone
     {"AT+CGAUTH", "AT+CGAUTH=1,0", "OK", 9000},      // Không sử dụng tài khoản/mật khẩu
     {"AT+CGACT", "AT+CGACT=1,1", "OK", 150000},      // Kích hoạt PDP context
     {"AT+CGPADDR", "AT+CGPADDR=1", "+CGPADDR: 1,\"<PDP_addr>\"", 5000}, // Kiểm tra địa chỉ IP

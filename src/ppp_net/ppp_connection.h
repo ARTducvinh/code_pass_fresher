@@ -37,6 +37,9 @@ void ppp_connection_poll(void);
  */
 void ppp_connection_close(void);
 
+// Khai báo biến cờ để các file khác có thể truy cập
+extern volatile bool ppp_connection_established;
+
 #ifdef __cplusplus
 }
 #endif

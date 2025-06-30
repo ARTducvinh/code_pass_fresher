@@ -3,6 +3,14 @@
 #include "lwip/tcpip.h"
 #include "netif/ppp/pppos.h"
 #include <string.h>
+#include <stdio.h> // Thêm vào để dùng sprintf
+#include "lwip/netif.h" // Thêm vào để truy cập thông tin netif
+#include "lwip/ip_addr.h" // Thêm vào để dùng ipaddr_ntoa
+#include "mqtt/mqtt.h" // Thêm dòng này ở đầu file
+#include "net_test.h"
+#include "timer.h" // Thêm vào để dùng sys_check_timeouts
+// Thêm một biến cờ toàn cục
+volatile bool ppp_connection_established = false;
 
 // Định nghĩa các biến toàn cục
 ppp_pcb *ppp = NULL;
@@ -31,21 +39,47 @@ static void ppp_status_cb(ppp_pcb *pcb, int err_code, void *ctx) {
     (void)pcb;
     (void)ctx;
     switch (err_code) {
-        case PPPERR_NONE:
+        case PPPERR_NONE: {
+            char log_buf[100];
             uart_log("PPP connected");
             ppp_connected = true;
-            // Khi kết nối thành công, chuyển sang chế độ PPP
             gsm_ppp_mode = true;
+
+            // Đặt cờ để báo hiệu kết nối PPP đã được thiết lập
+            ppp_connection_established = true;
+
+            sprintf(log_buf, "   IP address:  %s", ipaddr_ntoa(netif_ip4_addr(&ppp_netif)));
+            uart_log(log_buf);
+            sprintf(log_buf, "   Gateway:     %s", ipaddr_ntoa(netif_ip4_gw(&ppp_netif)));
+            uart_log(log_buf);
+            sprintf(log_buf, "   Netmask:     %s", ipaddr_ntoa(netif_ip4_netmask(&ppp_netif)));
+            uart_log(log_buf);
+
+            // // Gọi các hàm kiểm tra sau khi kết nối thành công
+            // uart_log("Running network tests...");
+            // test_tcp_connect_google();
+            // test_dns_resolution();
+            // test_http_request();
+            // uart_log("Network tests completed.");
+
+            // Khởi tạo MQTT sau khi kết nối PPP thành công
+            uart_log("Initializing MQTT...");
+            mqtt_example_init();
+            uart_log("MQTT initialization completed.");
+
             break;
+        }
         case PPPERR_USER:
             uart_log("PPP connection terminated by user");
             ppp_connected = false;
             gsm_ppp_mode = false;
+            ppp_connection_established = false;
             break;
         default:
             uart_log("PPP connection error");
             ppp_connected = false;
             gsm_ppp_mode = false;
+            ppp_connection_established = false;
             break;
     }
 }

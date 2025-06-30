@@ -63,6 +63,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/lwip}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif/ppp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/mqtt}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.common_options.target.endianess.1209835105" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.mcpu.1437116774" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F401CC" valueType="enumerated"/>
@@ -119,6 +120,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif/ppp/polarssl}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/ppp_net}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/ppp_net/arch}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/mqtt}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.common_options.target.endianess.615900404" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.mcpu.776899973" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F401CC" valueType="enumerated"/>
@@ -176,6 +178,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/lwip}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/lwip/src/include/netif/ppp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/src_code/src/mqtt}&quot;"/>
 								</option>
 								<inputType id="com.atollic.truestudio.gcc.input.2138300427" superClass="com.atollic.truestudio.gcc.input"/>
 							</tool>

@@ -5,6 +5,7 @@
 #include "gsm/gsm_data_layer.h"
 #include "middle/led_logic.h" 
 #include "ppp_net/ppp_connection.h"
+#include "ppp_net/net_test.h"
 #include "lwip/tcpip.h"
 #include <stdio.h>
 
@@ -12,7 +13,7 @@ int main(void)
 {
     hardware_init();
     uart_log("UART2 log test");
-    delay_ms(15000);
+    delay_ms(15000); // Đợi module GSM khởi động
     ppp_connection_init();
 
     while (1) {

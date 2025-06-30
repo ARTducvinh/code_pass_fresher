@@ -50,3 +50,8 @@ tcp.c:2341:1:tcp_netif_ip_addr_changed	24	static
 tcp.c:2364:1:tcp_debug_state_str	16	static
 tcp.c:2370:1:tcp_tcp_get_tcp_addrinfo	24	static
 tcp.c:2396:1:tcp_free_ooseq	16	static
+tcp.c:2415:1:tcp_debug_print	64	static
+tcp.c:2451:1:tcp_debug_print_state	16	static
+tcp.c:2462:1:tcp_debug_print_flags	16	static
+tcp.c:2495:1:tcp_debug_print_pcbs	24	static
+tcp.c:2527:1:tcp_pcbs_sane	16	static

@@ -4,6 +4,7 @@ pbuf.c:157:1:pbuf_pool_is_empty	16	static
 pbuf.c:179:1:pbuf_init_alloced_pbuf	24	static
 pbuf.c:226:1:pbuf_alloc	56	static
 pbuf.c:329:1:pbuf_alloc_reference	32	static
+pbuf.c:365:1:pbuf_alloced_custom	40	static
 pbuf.c:404:1:pbuf_realloc	32	static
 pbuf.c:478:1:pbuf_add_header_impl	32	static
 pbuf.c:556:1:pbuf_add_header	16	static
