@@ -8,7 +8,9 @@
 #define EAP_SUPPORT           0   // Tắt Extensible Authentication Protocol
 #define LCP_ECHO_SUPPORT      1   // Bật LCP Echo-Request/Echo-Reply
 #define PPP_IPV4_SUPPORT      1   // Bật hỗ trợ IPv4
+#ifndef PPP_IPV6_SUPPORT
 #define PPP_IPV6_SUPPORT      0   // Tắt hỗ trợ IPv6
+#endif
 
 // ===================================================================
 // PPP Configuration Options

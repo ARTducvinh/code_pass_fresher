@@ -6,9 +6,10 @@
 #include <stdio.h> // Thêm vào để dùng sprintf
 #include "lwip/netif.h" // Thêm vào để truy cập thông tin netif
 #include "lwip/ip_addr.h" // Thêm vào để dùng ipaddr_ntoa
-#include "mqtt/mqtt.h" // Thêm dòng này ở đầu file
+#include "mqtt/mqtt_example.h" // Thêm dòng này ở đầu file
 #include "net_test.h"
 #include "timer.h" // Thêm vào để dùng sys_check_timeouts
+
 // Thêm một biến cờ toàn cục
 volatile bool ppp_connection_established = false;
 
@@ -55,12 +56,22 @@ static void ppp_status_cb(ppp_pcb *pcb, int err_code, void *ctx) {
             sprintf(log_buf, "   Netmask:     %s", ipaddr_ntoa(netif_ip4_netmask(&ppp_netif)));
             uart_log(log_buf);
 
-            // // Gọi các hàm kiểm tra sau khi kết nối thành công
-            // uart_log("Running network tests...");
-            // test_tcp_connect_google();
-            // test_dns_resolution();
-            // test_http_request();
-            // uart_log("Network tests completed.");
+            // Thêm delay để PPP ổn định
+            uart_log("Waiting for PPP to stabilize...");
+            delay_ms(2000); // Chờ 2 giây
+
+            // Kiểm tra định tuyến
+            uart_log("Checking routing...");
+            if (netif_is_up(&ppp_netif)) {
+                uart_log("PPP netif is up and routing is active.");
+            } else {
+                uart_log("PPP netif is down. Routing may not be active.");
+            }
+
+            // Kiểm tra kết nối Internet
+            uart_log("Testing Internet connection...");
+            test_tcp_connect_google();
+            uart_log("Internet connection test completed.");
 
             // Khởi tạo MQTT sau khi kết nối PPP thành công
             uart_log("Initializing MQTT...");

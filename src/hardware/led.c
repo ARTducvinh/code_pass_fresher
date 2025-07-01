@@ -1,39 +1,33 @@
 #include "stm32f4xx.h"
 #include "led.h"
+#include "hardware.h"
 
 void led_init(void)
 {
-    // Configure PB9 (LED 4G) as output
-    GPIOB->MODER &= ~(3U << (9 * 2));
-    GPIOB->MODER |=  (1U << (9 * 2));
-    GPIOB->OTYPER &= ~(1U << 9);
-    GPIOB->OSPEEDR |= (3U << (9 * 2));
-    GPIOB->PUPDR &= ~(3U << (9 * 2));
-    GPIOB->BSRRH = (1U << 9);
+    // Configure LED 4G (Green Network) as output
+    GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_InitStruct.GPIO_Pin = LED_4G_PIN;
+    GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+    GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+    GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_Init(LED_4G_PORT, &GPIO_InitStruct);
 
-    // Configure PB4 (LED GREEN NETWORK) as output
-    GPIOB->MODER &= ~(3U << (4 * 2));
-    GPIOB->MODER |=  (1U << (4 * 2));
-    GPIOB->OTYPER &= ~(1U << 4);
-    GPIOB->OSPEEDR |= (3U << (4 * 2));
-    GPIOB->PUPDR &= ~(3U << (4 * 2));
-    GPIOB->BSRRH = (1U << 4);
+    // Configure LED Status (Blue Statemachine) as output
+    GPIO_InitStruct.GPIO_Pin = LED_STT_PIN;
+    GPIO_Init(LED_STT_PORT, &GPIO_InitStruct);
 
-    // Configure PB5 (LED BLUE STATEMACHINE) as output
-    GPIOB->MODER &= ~(3U << (5 * 2));
-    GPIOB->MODER |=  (1U << (5 * 2));
-    GPIOB->OTYPER &= ~(1U << 5);
-    GPIOB->OSPEEDR |= (3U << (5 * 2));
-    GPIOB->PUPDR &= ~(3U << (5 * 2));
-    GPIOB->BSRRH = (1U << 5);
+    // Configure LED Status Switch as output
+    GPIO_InitStruct.GPIO_Pin = LED_STT_SWITCH_PIN;
+    GPIO_Init(LED_STT_SWITCH_PORT, &GPIO_InitStruct);
 }
 
 void led_4g_on(void) {
-    GPIOB->BSRRL = (1U << 9);
+    GPIO_SetBits(LED_4G_PORT, LED_4G_PIN);
 }
 
 void led_4g_off(void) {
-    GPIOB->BSRRH = (1U << 9);
+    GPIO_ResetBits(LED_4G_PORT, LED_4G_PIN);
 }
 
 void led_4g_toggle(uint8_t value) {
@@ -43,32 +37,32 @@ void led_4g_toggle(uint8_t value) {
         led_4g_off();
 }
 
-void led_green_network_on(void) {
-    GPIOB->BSRRL = (1U << 4);
+void led_stt_on(void) {
+    GPIO_SetBits(LED_STT_PORT, LED_STT_PIN);
 }
 
-void led_green_network_off(void) {
-    GPIOB->BSRRH = (1U << 4);
+void led_stt_off(void) {
+    GPIO_ResetBits(LED_STT_PORT, LED_STT_PIN);
 }
 
-void led_green_network_toggle(uint8_t value) {
+void led_stt_toggle(uint8_t value) {
     if (value)
-        led_green_network_on();
+        led_stt_on();
     else
-        led_green_network_off();
+        led_stt_off();
 }
 
-void led_blue_statemachine_on(void) {
-    GPIOB->BSRRL = (1U << 5);
+void led_stt_switch_on(void) {
+    GPIO_SetBits(LED_STT_SWITCH_PORT, LED_STT_SWITCH_PIN);
 }
 
-void led_blue_statemachine_off(void) {
-    GPIOB->BSRRH = (1U << 5);
+void led_stt_switch_off(void) {
+    GPIO_ResetBits(LED_STT_SWITCH_PORT, LED_STT_SWITCH_PIN);
 }
 
-void led_blue_statemachine_toggle(uint8_t value) {
+void led_stt_switch_toggle(uint8_t value) {
     if (value)
-        led_blue_statemachine_on();
+        led_stt_switch_on();
     else
-        led_blue_statemachine_off();
+        led_stt_switch_off();
 }

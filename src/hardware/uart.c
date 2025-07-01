@@ -7,7 +7,7 @@
 #include "uart_line_queue.h"
 #include "gsm_state.h"
 #include "netif/ppp/pppos.h"
-#include "ppp_net/ppp_connection.h" // Thêm file header này
+#include "ppp_net/ppp_connection.h"
 #include <stdint.h>
 #include <stdio.h>
 

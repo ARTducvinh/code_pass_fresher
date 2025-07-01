@@ -17,6 +17,7 @@
         "stdio.h": "c",
         "stdbool.h": "c",
         "hardware.h": "c",
-        "ppp_connection.h": "c"
+        "ppp_connection.h": "c",
+        "core_cm4.h": "c"
     }
 }

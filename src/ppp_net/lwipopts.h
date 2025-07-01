@@ -1,59 +1,70 @@
+// Hệ thống
 #define NO_SYS                    0
 #define SYS_LIGHTWEIGHT_PROT      1
 
+// IPv4 và IPv6
 #define LWIP_IPV4                 1
-#define LWIP_IPV6                 0
+#define LWIP_IPV6                 0 // Tắt IPv6 nếu không sử dụng
 
-#define LWIP_ARP                  0 // Không dùng với PPP
-#define IP_REASSEMBLY             0
+// ARP (không cần với PPP)
+#define LWIP_ARP                  0
 
+// IP Reassembly và Fragmentation
+#define IP_REASSEMBLY             0  // Tắt IP reassembly
+#define IP_FRAG                   0  // Tắt IP fragmentation
+
+// TCP
 #define LWIP_TCP                  1
-#define LWIP_UDP                  1  // Bật hỗ trợ UDP
-#define LWIP_RAW                  0
+#define TCP_MSS                   1460 // Maximum Segment Size (Ethernet MTU - IP/TCP headers)
+#define TCP_SND_BUF               (2 * TCP_MSS) // Giảm kích thước bộ nhớ gửi TCP
+#define TCP_WND                   TCP_MSS // Đặt cửa sổ TCP bằng kích thước MSS
+#define TCP_SND_QUEUELEN          (4 * TCP_SND_BUF / TCP_MSS)
+#define MEMP_NUM_TCP_SEG          8   // Giảm số lượng TCP segment
+#define TCP_SNDQUEUELOWAT         4
+#define LWIP_DISABLE_TCP_SANITY_CHECKS  1
 
-#define LWIP_NETCONN              1  // Bật hỗ trợ Netconn API
-#define LWIP_SOCKET               1
+// UDP
+#define LWIP_UDP                  0 // Tắt UDP nếu không sử dụng
 
-#define LWIP_STATS                0
-#define LWIP_DEBUG                0
+// RAW sockets
+#define LWIP_RAW                  0 // Tắt RAW sockets nếu không sử dụng
+
+// Netconn và Socket API
+#define LWIP_NETCONN              0 // Tắt Netconn API nếu không sử dụng
+#define LWIP_SOCKET               0 // Tắt Socket API nếu không sử dụng
+
+// Bộ nhớ đệm
+#define PBUF_POOL_SIZE            6   // Tăng số lượng bộ nhớ đệm
+#define PBUF_POOL_BUFSIZE         512 // Giữ nguyên kích thước mỗi gói
+
+// DNS
+#define LWIP_DNS                  0 // Tắt DNS nếu không sử dụng
 
 // PPP
 #define PPP_SUPPORT               1
 #define PPPOS_SUPPORT             1
 #define PAP_SUPPORT               1
-#define CHAP_SUPPORT              1
-#define MSCHAP_SUPPORT            0
-#define VJ_SUPPORT                0
+#define CHAP_SUPPORT              0 // Tắt CHAP nếu không sử dụng
+#define MSCHAP_SUPPORT            0 // Tắt MSCHAP nếu không sử dụng
+#define VJ_SUPPORT                0 // Tắt Van Jacobson TCP/IP header compression nếu không sử dụng
 
-#define MEMP_NUM_TCP_PCB          5
-#define PBUF_POOL_SIZE            16
-#define PBUF_POOL_BUFSIZE         512
+// IGMP (Multicast)
+#define LWIP_IGMP                 0 // Tắt IGMP nếu không sử dụng
 
-#define TCP_MSS                   536
-#define TCP_SND_BUF               (4 * TCP_MSS)
-#define TCP_WND                   (4 * TCP_MSS)
-#define TCP_SND_QUEUELEN          (2 * TCP_SND_BUF / TCP_MSS)
-#define TCP_SNDQUEUELOWAT         2
+// ICMP
+#define LWIP_ICMP                 0 // Tắt ICMP nếu không sử dụng
 
-#define LWIP_MD5_SUPPORT          1
+// IP Forwarding
+#define IP_FORWARD                0 // Tắt IP Forwarding nếu không sử dụng
 
-// Bật debug cho PPP và TCP/IP (giúp xem log chi tiết nếu cần)
-#define PPP_DEBUG                 LWIP_DBG_ON
-#define TCP_DEBUG                 LWIP_DBG_ON
-#define SOCKETS_DEBUG             LWIP_DBG_ON
+// Debug
+#define LWIP_DEBUG                0 // Tắt debug để giảm dung lượng flash
 
-// Bật hỗ trợ fcntl (nếu lwIP version hỗ trợ)
-#define LWIP_FCNTL_API            1
+// HTTPD, FTP, Telnet
+#define LWIP_HTTPD                0 // Tắt nếu không cần
+#define LWIP_FTP                  0 // Tắt nếu không cần
+#define LWIP_TELNET               0 // Tắt nếu không cần
 
-// Bật hỗ trợ SO_ERROR cho getsockopt (giúp kiểm tra lỗi khi non-blocking connect)
-#define LWIP_SO_SNDTIMEO          1
-#define LWIP_SO_RCVTIMEO          1
-#define LWIP_SO_RCVBUF            1
-#define LWIP_SO_SNDBUF            1
-
-// Bật debug toàn cục nếu cần
-//#define LWIP_DEBUG                1
-
-// Đảm bảo các macro này không bị định nghĩa lại ở nơi khác
-
-#define LWIP_DNS                  1  // Bật hỗ trợ DNS
+// SNMP và mDNS
+#define LWIP_SNMP                 0 // Tắt nếu không cần
+#define LWIP_MDNS_RESPONDER       0 // Tắt nếu không cần

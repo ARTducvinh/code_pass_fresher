@@ -1,5 +1,5 @@
-ppp_connection.c:31:14:ppp_output_callback	24	static
-ppp_connection.c:38:13:ppp_status_cb	128	static
-ppp_connection.c:87:6:ppp_connection_init	8	static
-ppp_connection.c:105:6:ppp_connection_poll	8	static
-ppp_connection.c:117:6:ppp_connection_close	8	static
+ppp_connection.c:32:14:ppp_output_callback	24	static
+ppp_connection.c:39:13:ppp_status_cb	128	static
+ppp_connection.c:98:6:ppp_connection_init	8	static
+ppp_connection.c:116:6:ppp_connection_poll	8	static
+ppp_connection.c:128:6:ppp_connection_close	8	static

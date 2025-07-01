@@ -20,8 +20,6 @@ ppp.c:1038:5:ppp_send_config	40	static
 ppp.c:1054:5:ppp_recv_config	40	static
 ppp.c:1070:5:sifaddr	40	static
 ppp.c:1085:5:cifaddr	24	static
-ppp.c:1121:5:sdns	32	static
-ppp.c:1136:5:cdns	32	static
 ppp.c:1173:5:sifup	16	static
 ppp.c:1188:5:sifdown	16	static
 ppp.c:1214:7:get_mask	16	static

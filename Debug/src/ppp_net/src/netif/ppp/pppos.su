@@ -7,8 +7,8 @@ pppos.c:401:1:pppos_destroy	24	static
 pppos.c:425:1:pppos_input_tcpip	32	static
 pppos.c:444:7:pppos_input_sys	24	static
 pppos.c:480:1:pppos_input	56	static
-pppos.c:783:1:pppos_send_config	48	static
-pppos.c:803:1:pppos_recv_config	48	static
+pppos.c:783:1:pppos_send_config	32	static
+pppos.c:803:1:pppos_recv_config	32	static
 pppos.c:828:1:pppos_input_free_current_packet	16	static
 pppos.c:844:1:pppos_input_drop	16	static
 pppos.c:868:1:pppos_output_append	40	static
