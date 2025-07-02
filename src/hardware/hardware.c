@@ -52,6 +52,6 @@ void gsm_module_power_cycle(void) {
     GSM_POWER_GPIO_PORT->OSPEEDR |= (3U << (GSM_POWER_PIN * 2));
     GSM_POWER_GPIO_PORT->PUPDR &= ~(3U << (GSM_POWER_PIN * 2));
     GSM_POWER_GPIO_PORT->ODR &= ~(1U << GSM_POWER_PIN);
-    delay_ms(2000); 
+    delay_ms(3000); 
     GSM_POWER_GPIO_PORT->ODR |= (1U << GSM_POWER_PIN); 
 }

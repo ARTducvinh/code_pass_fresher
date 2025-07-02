@@ -42,21 +42,21 @@ static void ppp_status_cb(ppp_pcb *pcb, int err_code, void *ctx) {
             sprintf(log_buf, "   Netmask:     %s", ipaddr_ntoa(netif_ip4_netmask(&ppp_netif)));
             uart_log(log_buf);
             
-            //uart_log("Waiting for PPP to stabilize...");
+            uart_log("Waiting for PPP to stabilize...");
             delay_ms(2000);
 
-            // uart_log("Checking routing...");
-            // if (netif_is_up(&ppp_netif)) {
-            //     uart_log("PPP netif is up and routing is active.");
-            // } else {
-            //     uart_log("PPP netif is down. Routing may not be active.");
-            // }
+            uart_log("Checking routing...");
+            if (netif_is_up(&ppp_netif)) {
+                uart_log("PPP netif is up and routing is active.");
+            } else {
+                uart_log("PPP netif is down. Routing may not be active.");
+            }
 
-            //uart_log("Testing Internet connection...");
-            //test_tcp_connect_google();
-            //uart_log("Internet connection test completed.");
+            uart_log("Testing Internet connection...");
+            test_tcp_connect_google();
+            uart_log("Internet connection test completed.");
 
-            //uart_log("Initializing MQTT...");
+            uart_log("Initializing MQTT...");
             mqtt_example_init();
             uart_log("MQTT initialization completed.");
 

@@ -11,14 +11,12 @@
 #include "main.h"
 #include "gsm_state.h"
 
-// Hàm gửi lệnh AT dựa trên chỉ số lệnh trong gsm_commands
 void send_gsm_command_by_index(int idx) {
     if (idx < 0 || idx >= gsm_commands_count) return;
     uart1_send_raw((uint8_t *)gsm_commands[idx].syntax, strlen(gsm_commands[idx].syntax));
     uart1_send_raw((uint8_t *)"\r\n", 2);
 }
 
-// Hàm gửi lần lượt các lệnh, chỉ gửi tiếp khi phản hồi thành công
 void send_all_gsm_commands_with_check(void)
 {
     static int current_command_index = 0;

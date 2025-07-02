@@ -1,2 +1,2 @@
-button_logic.c:15:13:toggle_switch_state	4	static
-button_logic.c:23:6:button_logic_update	16	static
+button_logic.c:16:13:toggle_switch_state	4	static
+button_logic.c:24:6:button_logic_update	16	static

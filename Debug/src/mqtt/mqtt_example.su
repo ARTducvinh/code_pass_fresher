@@ -1,5 +1,5 @@
 mqtt_example.c:39:13:mqtt_try_reconnect	16	static
 mqtt_example.c:55:1:mqtt_incoming_publish_cb	160	static
 mqtt_example.c:64:1:mqtt_incoming_data_cb	64	static
-mqtt_example.c:86:1:mqtt_connection_cb	64	static
-mqtt_example.c:118:1:mqtt_example_init	16	static
+mqtt_example.c:86:1:mqtt_connection_cb	56	static
+mqtt_example.c:116:1:mqtt_example_init	16	static

@@ -1,3 +1,3 @@
-mqtt_response_parser.c:8:5:mqtt_parse_command	40	static
-mqtt_response_parser.c:31:13:get_device_state_string	16	static
-mqtt_response_parser.c:43:13:get_switch_state_string	16	static
+mqtt_response_parser.c:7:5:mqtt_parse_command	32	static
+mqtt_response_parser.c:27:13:get_device_state_string	16	static
+mqtt_response_parser.c:39:13:get_switch_state_string	16	static

@@ -1,6 +1,7 @@
 #include "stm32f4xx.h"
 #include "led.h"
 #include "hardware.h"
+#include "uart.h"
 
 void led_init(void)
 {
@@ -20,10 +21,12 @@ void led_init(void)
 
 void led_4g_on(void) {
     GPIO_SetBits(LED_4G_PORT, LED_4G_PIN);
+    //uart_log("LED 4G ON");
 }
 
 void led_4g_off(void) {
     GPIO_ResetBits(LED_4G_PORT, LED_4G_PIN);
+    //uart_log("LED 4G OFF");
 }
 
 void led_4g_toggle(uint8_t value) {
@@ -32,6 +35,8 @@ void led_4g_toggle(uint8_t value) {
     else
         led_4g_off();
 }
+
+
 
 void led_stt_on(void) {
     GPIO_SetBits(LED_STT_PORT, LED_STT_PIN);

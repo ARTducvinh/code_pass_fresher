@@ -173,6 +173,13 @@ uint8_t led_stt_switch_read_state(void) {
     return (switch_state == swich_on) ? 1 : 0;
 }
 
+// void led_stt_switch_control(void) {
+//     if (switch_state == swich_on) {
+//         led_4g_on();
+//     } else {
+//         led_4g_off();
+//     }
+// }
 void led_stt_switch_control(void) {
     if (switch_state == swich_on) {
         led_stt_switch_on();

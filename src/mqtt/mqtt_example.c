@@ -94,9 +94,7 @@ mqtt_connection_cb(mqtt_client_t *client, void *arg, mqtt_connection_status_t st
 
         if (mqtt_phase == 1) {
             mqtt_sub_unsub(client, "device/switch1/cmd", 0, NULL, NULL, 1);
-            const char *topic = "device/switch1/status";
-            const char *message = "{\"msg\": \"Reconnect broker\"}";
-            mqtt_publish(client, topic, message, strlen(message), 0, 0, NULL, NULL);
+            mqtt_publish_switch_state();
         } else {
             mqtt_phase = 0;
             mqtt_sub_unsub(client,

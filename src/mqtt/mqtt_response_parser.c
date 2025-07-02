@@ -4,25 +4,21 @@
 #include "hardware/uart.h"
 #include "main.h"
 
-// Trả về 1 nếu là ON, 2 nếu là OFF, 0 nếu không hợp lệ
 int mqtt_parse_command(const char* topic, const uint8_t* data, uint16_t len) {
     if (topic == NULL || data == NULL || len == 0) return 0;
-
-    // Tìm chuỗi "msg"
     const char* msg_ptr = strstr((const char*)data, "\"msg\"");
-    if (msg_ptr) {
-        const char* colon = strchr(msg_ptr, ':');
-        if (colon) {
-            const char* value = colon + 1;
-            while (*value == ' ' || *value == '\"') value++;
-            if (strncmp(value, "ON", 2) == 0) {
-                uart_log("MQTT CMD: ON");
-                return 1;
-            }
-            if (strncmp(value, "OFF", 3) == 0) {
-                uart_log("MQTT CMD: OFF");
-                return 2;
-            }
+    if (msg_ptr) { 
+        if (strstr(msg_ptr, "ON")) {
+            uart_log("MQTT CMD: ON");
+            return 1;
+        }
+        if (strstr(msg_ptr, "OFF")) {
+            uart_log("MQTT CMD: OFF");
+            return 2;
+        }
+        if (strstr(msg_ptr, "RELAY")) {
+            uart_log("MQTT CMD: RELAY");
+            return 3;
         }
     }
     return 0;

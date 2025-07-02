@@ -9,6 +9,7 @@
 #include "main.h"
 #include "middle/button_logic.h"
 #include "hardware/button.h"
+#include "hardware/led.h"
 
 device_state_t current_device_state = DEVICE_STATE_BOOTING_GSM;
 swich_state_t switch_state = swich_off;

@@ -3,6 +3,7 @@
 #include "uart.h"
 #include "hardware/button.h"
 #include "main.h"
+#include "mqtt_response_handler.h"
 
 typedef enum {
     BUTTON_IDLE,
@@ -43,6 +44,7 @@ void button_logic_update(void)
 
                 if (duration < 5000) {
                     toggle_switch_state();
+                    mqtt_publish_switch_state();
                 }
                 else if (duration < 10000) {
                     uart_log("5<s < 10s");
@@ -56,3 +58,4 @@ void button_logic_update(void)
             break;
     }
 }
+
