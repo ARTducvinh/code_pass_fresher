@@ -18,6 +18,10 @@
         "stdbool.h": "c",
         "hardware.h": "c",
         "ppp_connection.h": "c",
-        "core_cm4.h": "c"
+        "core_cm4.h": "c",
+        "stm32f4xx_exti.h": "c",
+        "button_logic.h": "c",
+        "mqtt.h": "c",
+        "mqtt_response_parser.h": "c"
     }
 }

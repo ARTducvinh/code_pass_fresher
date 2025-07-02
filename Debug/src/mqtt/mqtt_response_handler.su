@@ -1,0 +1,2 @@
+mqtt_response_handler.c:16:6:handle_led_stt_switch	16	static
+mqtt_response_handler.c:26:6:mqtt_handle_command_and_respond	232	static

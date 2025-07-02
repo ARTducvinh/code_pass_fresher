@@ -5,13 +5,11 @@
 extern "C" {
 #endif
 
-// Tổng hợp các lệnh và thời gian phản hồi
-
 typedef struct {
-    const char* command;       // Lệnh AT
-    const char* syntax;        // Cú pháp
-    const char* response;      // Phản hồi chính
-    int max_response_time_ms;  // Thời gian phản hồi tối đa (ms)
+    const char* command;       
+    const char* syntax;        
+    const char* response;      
+    int max_response_time_ms;  
 } gsm_command_t;
 
 extern const gsm_command_t gsm_commands[];

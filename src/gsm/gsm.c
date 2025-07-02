@@ -7,7 +7,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include "uart_line_queue.h"// định nghĩa tạm thời cho biến ppp_mode để xác định trạng thái 
+#include "uart_line_queue.h"
+#include "main.h"
+#include "gsm_state.h"
 
 // Hàm gửi lệnh AT dựa trên chỉ số lệnh trong gsm_commands
 void send_gsm_command_by_index(int idx) {
@@ -26,7 +28,7 @@ void send_all_gsm_commands_with_check(void)
     char response[256];
 
     if (current_command_index >= gsm_commands_count) {
-        return; // Đã gửi hết lệnh
+        return; 
     }
 
     if (!waiting_for_response) {
@@ -37,7 +39,7 @@ void send_all_gsm_commands_with_check(void)
 
     uint32_t wait_time = gsm_commands[current_command_index].max_response_time_ms;
     if ((timer2_get_tick() - start_tick) < wait_time) {
-        if ((timer2_get_tick() - last_send_tick) >= 5000) {
+        if ((timer2_get_tick() - last_send_tick) >= 3000) { 
             send_gsm_command_by_index(current_command_index);
             last_send_tick = timer2_get_tick();
         }
@@ -45,14 +47,15 @@ void send_all_gsm_commands_with_check(void)
             if (check_gsm_response_by_index(current_command_index, response)) {
                 waiting_for_response = false;
                 current_command_index++;
-                return; // Chuyển sang lệnh tiếp theo
+                return; 
             }
         }
     } else {
+        current_device_state = DEVICE_STATE_GSM_ERROR;
         char log_buf[64];
         snprintf(log_buf, sizeof(log_buf), "Loi khi gui lenh case %d: %s", current_command_index, gsm_commands[current_command_index].command);
         uart_log(log_buf);
         waiting_for_response = false;
-        current_command_index = gsm_commands_count; // Kết thúc gửi lệnh
+        current_command_index = gsm_commands_count;
     }
 }

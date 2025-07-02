@@ -5,14 +5,8 @@
 extern "C" {
 #endif
 
-typedef enum {
-    GSM_STATE_INITIALIZING,  
-    GSM_STATE_NETWORK_READY, 
-    GSM_STATE_CONNECTED      
-} gsm_state_t;
+bool check_gsm_response_by_index(int idx, const char* response);
 
-// Biến kiểm tra mode PPP
-extern bool ppp_mode;
 #ifdef __cplusplus
 }
 #endif

@@ -1,11 +1,8 @@
 #include "gsm_parser.h"
 #include <stdbool.h>
 #include <string.h>
+#include "gsm_state.h"
 
-
-bool ppp_mode = false;
-
-// Hàm kiểm tra phản hồi dựa trên chỉ số lệnh trong gsm_commands
 bool check_gsm_response_by_index(int idx, const char* response) {
     switch (idx) {
         case 0: // AT

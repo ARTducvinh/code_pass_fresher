@@ -3,32 +3,20 @@
 #include "lwip/tcpip.h"
 #include "netif/ppp/pppos.h"
 #include <string.h>
-#include <stdio.h> // Thêm vào để dùng sprintf
-#include "lwip/netif.h" // Thêm vào để truy cập thông tin netif
-#include "lwip/ip_addr.h" // Thêm vào để dùng ipaddr_ntoa
-#include "mqtt/mqtt_example.h" // Thêm dòng này ở đầu file
+#include <stdio.h> 
+#include "lwip/netif.h" 
+#include "lwip/ip_addr.h" 
+#include "mqtt/mqtt_example.h" 
 #include "net_test.h"
-#include "timer.h" // Thêm vào để dùng sys_check_timeouts
+#include "timer.h" 
 
-// Thêm một biến cờ toàn cục
 volatile bool ppp_connection_established = false;
-
-// Định nghĩa các biến toàn cục
 ppp_pcb *ppp = NULL;
 volatile bool gsm_ppp_mode = false;
 
 static struct netif ppp_netif;
 static bool ppp_connected = false;
 
-/**
- * @brief  Hàm wrapper cho việc gửi dữ liệu PPP qua UART.
- * @brief  Hàm này có prototype khớp với yêu cầu của pppos_create.
- * @param  pcb: PPP control block
- * @param  data: Dữ liệu cần gửi
- * @param  len: Độ dài dữ liệu
- * @param  ctx: Con trỏ ngữ cảnh (không dùng)
- * @retval Luôn trả về độ dài đã gửi.
- */
 static u32_t ppp_output_callback(ppp_pcb *pcb, const void *data, u32_t len, void *ctx) {
     (void)pcb;
     (void)ctx;
@@ -45,8 +33,6 @@ static void ppp_status_cb(ppp_pcb *pcb, int err_code, void *ctx) {
             uart_log("PPP connected");
             ppp_connected = true;
             gsm_ppp_mode = true;
-
-            // Đặt cờ để báo hiệu kết nối PPP đã được thiết lập
             ppp_connection_established = true;
 
             sprintf(log_buf, "   IP address:  %s", ipaddr_ntoa(netif_ip4_addr(&ppp_netif)));
@@ -55,26 +41,22 @@ static void ppp_status_cb(ppp_pcb *pcb, int err_code, void *ctx) {
             uart_log(log_buf);
             sprintf(log_buf, "   Netmask:     %s", ipaddr_ntoa(netif_ip4_netmask(&ppp_netif)));
             uart_log(log_buf);
+            
+            //uart_log("Waiting for PPP to stabilize...");
+            delay_ms(2000);
 
-            // Thêm delay để PPP ổn định
-            uart_log("Waiting for PPP to stabilize...");
-            delay_ms(2000); // Chờ 2 giây
+            // uart_log("Checking routing...");
+            // if (netif_is_up(&ppp_netif)) {
+            //     uart_log("PPP netif is up and routing is active.");
+            // } else {
+            //     uart_log("PPP netif is down. Routing may not be active.");
+            // }
 
-            // Kiểm tra định tuyến
-            uart_log("Checking routing...");
-            if (netif_is_up(&ppp_netif)) {
-                uart_log("PPP netif is up and routing is active.");
-            } else {
-                uart_log("PPP netif is down. Routing may not be active.");
-            }
+            //uart_log("Testing Internet connection...");
+            //test_tcp_connect_google();
+            //uart_log("Internet connection test completed.");
 
-            // Kiểm tra kết nối Internet
-            uart_log("Testing Internet connection...");
-            test_tcp_connect_google();
-            uart_log("Internet connection test completed.");
-
-            // Khởi tạo MQTT sau khi kết nối PPP thành công
-            uart_log("Initializing MQTT...");
+            //uart_log("Initializing MQTT...");
             mqtt_example_init();
             uart_log("MQTT initialization completed.");
 
@@ -96,11 +78,10 @@ static void ppp_status_cb(ppp_pcb *pcb, int err_code, void *ctx) {
 }
 
 void ppp_connection_init(void) {
-    uart_log("Initializing PPP connection...");
+    //uart_log("Initializing PPP connection...");
 
     tcpip_init(NULL, NULL);
 
-    // Sử dụng hàm wrapper ppp_output_callback
     ppp = pppos_create(&ppp_netif, ppp_output_callback, ppp_status_cb, NULL);
     if (ppp == NULL) {
         uart_log("Failed to create PPP control block");
@@ -108,21 +89,11 @@ void ppp_connection_init(void) {
     }
 
     ppp_set_default(ppp);
-    // Đặt mật khẩu nếu cần
-    // ppp_set_auth(ppp, PPPAUTHTYPE_PAP, "user", "password");
     ppp_connect(ppp, 0);
 }
 
 void ppp_connection_poll(void) {
-    // Hàm này nên được gọi thường xuyên từ vòng lặp chính
     sys_check_timeouts();
-
-    if (ppp_connected) {
-        // Có thể thêm log ở đây nếu cần, nhưng hạn chế để tránh spam
-        // uart_log("PPP connection is active");
-    } else {
-        // uart_log("PPP connection is not active");
-    }
 }
 
 void ppp_connection_close(void) {

@@ -12,12 +12,8 @@ void led_init(void)
     GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
     GPIO_Init(LED_4G_PORT, &GPIO_InitStruct);
-
-    // Configure LED Status (Blue Statemachine) as output
     GPIO_InitStruct.GPIO_Pin = LED_STT_PIN;
     GPIO_Init(LED_STT_PORT, &GPIO_InitStruct);
-
-    // Configure LED Status Switch as output
     GPIO_InitStruct.GPIO_Pin = LED_STT_SWITCH_PIN;
     GPIO_Init(LED_STT_SWITCH_PORT, &GPIO_InitStruct);
 }
@@ -58,11 +54,4 @@ void led_stt_switch_on(void) {
 
 void led_stt_switch_off(void) {
     GPIO_ResetBits(LED_STT_SWITCH_PORT, LED_STT_SWITCH_PIN);
-}
-
-void led_stt_switch_toggle(uint8_t value) {
-    if (value)
-        led_stt_switch_on();
-    else
-        led_stt_switch_off();
 }

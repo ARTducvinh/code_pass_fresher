@@ -5,8 +5,8 @@ uart.c:67:6:uart_log	24	static
 uart.c:80:6:uart1_send_raw	24	static
 uart.c:89:6:gsm_hw_layer_uart_fill_rx	24	static
 uart.c:110:6:uart1_poll	16	static
-uart.c:156:6:DMA2_Stream2_IRQHandler	4	static
-uart.c:164:6:USART1_IRQHandler	16	static
-uart.c:175:6:uart_enable_uart1_idle_irq	8	static
-uart.c:181:6:uart_disable_uart1_irq	8	static
-uart.c:188:6:restart_dma2_stream2	4	static
+uart.c:147:6:DMA2_Stream2_IRQHandler	4	static
+uart.c:155:6:USART1_IRQHandler	16	static
+uart.c:166:6:uart_enable_uart1_idle_irq	8	static
+uart.c:172:6:uart_disable_uart1_irq	8	static
+uart.c:179:6:restart_dma2_stream2	4	static

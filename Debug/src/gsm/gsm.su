@@ -1,2 +1,2 @@
-gsm.c:13:6:send_gsm_command_by_index	24	static
-gsm.c:20:6:send_all_gsm_commands_with_check	344	static
+gsm.c:15:6:send_gsm_command_by_index	24	static
+gsm.c:22:6:send_all_gsm_commands_with_check	344	static

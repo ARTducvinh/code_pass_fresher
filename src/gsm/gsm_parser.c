@@ -5,101 +5,72 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "gsm_state.h"
-#include "ppp_net/ppp_connection.h" // Thêm header để truy cập gsm_ppp_mode
+#include "ppp_net/ppp_connection.h"
+#include "main.h"
 
-
-// Hàm phân tích phản hồi cho lệnh "AT"
 bool parse_response_at(const char* response) {
-    uart_log(response);
+    //uart_log(response);
     return strstr(response, "OK") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "ATI"
 bool parse_response_ati(const char* response) {
-    uart_log(response);
-    return strstr(response, "Manufacturer: INCORPORATED") != NULL; // Dòng dữ liệu chính
+    //uart_log(response);
+    return strstr(response, "Manufacturer: INCORPORATED") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "AT+CPIN?"
 bool parse_response_at_cpin(const char* response) {
-    uart_log(response);
-    return strstr(response, "+CPIN: READY") != NULL; // Dòng dữ liệu chính
+    //uart_log(response);
+    return strstr(response, "+CPIN: READY") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "AT+CSQ"
 bool parse_response_at_csq(const char* response) {
-    uart_log(response);
-    return strstr(response, "+CSQ:") != NULL; // Dòng dữ liệu chính
+    //uart_log(response);
+    return strstr(response, "+CSQ:") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "AT+CEREG?"
 bool parse_response_at_cereg(const char* response) {
-    uart_log(response);
-    return strstr(response, "+CEREG: 0,1") != NULL; // Dòng dữ liệu chính
+    //uart_log(response);
+    return strstr(response, "+CEREG: 0,1") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "AT+COPS"
 bool parse_response_at_cops(const char* response) {
-    uart_log(response);
-    return strstr(response, "+COPS=0") != NULL; // Dòng dữ liệu chính
+    //uart_log(response);
+    return strstr(response, "+COPS=0") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "AT+CGDCONT"
 bool parse_response_at_cgdcont(const char* response) {
-    uart_log(response);
-    return strstr(response, "OK") != NULL; // Dòng xác nhận
+   // uart_log(response);
+    return strstr(response, "OK") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "AT+CGAUTH"
 bool parse_response_at_cgauth(const char* response) {
-    uart_log(response);
-    return strstr(response, "OK") != NULL; // Dòng xác nhận
+    //uart_log(response);
+    return strstr(response, "OK") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "AT+CGACT"
 bool parse_response_at_cgact(const char* response) {
-    uart_log(response);
-    return strstr(response, "OK") != NULL; // Dòng xác nhận
+    //uart_log(response);
+    return strstr(response, "OK") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "AT+CGPADDR"
 bool parse_response_at_cgpaddr(const char* response) {
-    uart_log(response);
-    return strstr(response, "+CGPADDR: 1,") != NULL; // Dòng dữ liệu chính
+    //uart_log(response);
+    return strstr(response, "+CGPADDR: 1,") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "AT+CGDATA"
 bool parse_response_at_cgdata(const char* response) {
-    uart_log(response);
-    return strstr(response, "CONNECT") != NULL; // Dòng dữ liệu chính
+    //uart_log(response);
+    return strstr(response, "CONNECT") != NULL;
 }
 
-// Hàm phân tích phản hồi cho lệnh "ATD*99#"
 bool parse_response_atd99(const char* response) {
-    uart_log(response);
+    //uart_log(response);
     if (strstr(response, "CONNECT") != NULL) {
-        // Khi nhận được "CONNECT", chuyển sang chế độ PPP
-        // Cờ này sẽ được sử dụng trong uart1_poll() để chuyển dữ liệu đến lwIP
         gsm_ppp_mode = true;
-        uart_log("Switching to PPP mode.");
-        
-        // Xóa bộ đệm DMA và bắt đầu nhận dữ liệu PPP.
-        // Điều này đảm bảo rằng không có dữ liệu AT command cũ nào bị xử lý như dữ liệu PPP.
-        restart_dma2_stream2(); 
-        
+        //uart_log("Switching to PPP mode.");
+        current_device_state = DEVICE_STATE_BOOTING_DEVICE;
+        restart_dma2_stream2();
         return true;
     }
     return false;
 }
-
-// // Hàm phân tích phản hồi cho lệnh "+++"
-// bool parse_response_plus(const char* response) {
-//     uart_log(response);
-//     return strstr(response, "OK") != NULL; // Dòng xác nhận
-// }
-
-// // Hàm phân tích phản hồi cho lệnh "ATH"
-// bool parse_response_ath(const char* response) {
-//     uart_log(response);
-//     return strstr(response, "OK") != NULL; // Dòng xác nhận
-// }

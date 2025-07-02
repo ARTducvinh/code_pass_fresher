@@ -34,8 +34,7 @@
 extern "C" {
 #endif
 
-void mqtt_example_init(void);
-
+void mqtt_example_init(void); 
 #ifdef __cplusplus
 }
 #endif
