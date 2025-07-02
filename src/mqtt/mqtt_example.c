@@ -30,7 +30,26 @@ static const struct mqtt_connect_client_info_t mqtt_client_info =
 mqtt_client_t* mqtt_client = NULL;
 
 static char last_topic[128] = {0};
-static int mqtt_phase = 0; // 0: xác nhận, 1: chuyển sang topic chính
+static int mqtt_phase = 0; 
+static int mqtt_reconnect_attempts = 0;
+#define MQTT_MAX_RECONNECT_ATTEMPTS 10
+
+static void mqtt_connection_cb(mqtt_client_t *client, void *arg, mqtt_connection_status_t status);
+
+static void mqtt_try_reconnect(void) {
+    if (mqtt_reconnect_attempts < MQTT_MAX_RECONNECT_ATTEMPTS) {
+        mqtt_reconnect_attempts++;
+        uart_log("MQTT reconnecting...");
+        delay_ms(2000); 
+        mqtt_client_connect(mqtt_client,
+            &mqtt_ip, MQTT_PORT,
+            mqtt_connection_cb, LWIP_CONST_CAST(void*, &mqtt_client_info),
+            &mqtt_client_info);
+    } else {
+        uart_log("MQTT reconnect failed too many times!");
+        current_device_state = DEVICE_STATE_DEVICE_ERROR;
+    }
+}
 
 static void
 mqtt_incoming_publish_cb(void *arg, const char *topic, u32_t tot_len)
@@ -49,8 +68,8 @@ mqtt_incoming_data_cb(void *arg, const u8_t *data, u16_t len, u8_t flags)
 
     if (mqtt_phase == 0 && strcmp(last_topic, "start/device/cmd") == 0) {
         uart_log("Received connect confirm, switching to main topics.");
-        mqtt_sub_unsub(mqtt_client, "start/device/cmd", 0, NULL, NULL, 0); // Unsub
-        mqtt_sub_unsub(mqtt_client, "device/switch1/cmd", 0, NULL, NULL, 1); // Sub
+        mqtt_sub_unsub(mqtt_client, "start/device/cmd", 0, NULL, NULL, 0); 
+        mqtt_sub_unsub(mqtt_client, "device/switch1/cmd", 0, NULL, NULL, 1); 
         const char *topic = "device/switch1/status";
         const char *message = "{\"msg\": \"OFF\"}";
         mqtt_publish(mqtt_client, topic, message, strlen(message), 0, 0, NULL, NULL);
@@ -71,6 +90,7 @@ mqtt_connection_cb(mqtt_client_t *client, void *arg, mqtt_connection_status_t st
     if (status == MQTT_CONNECT_ACCEPTED) {
         uart_log("MQTT connection accepted!");
         current_device_state = DEVICE_STATE_DEVICE_READY;
+        mqtt_reconnect_attempts = 0; 
 
         if (mqtt_phase == 1) {
             mqtt_sub_unsub(client, "device/switch1/cmd", 0, NULL, NULL, 1);
@@ -90,6 +110,7 @@ mqtt_connection_cb(mqtt_client_t *client, void *arg, mqtt_connection_status_t st
     } else {
         uart_log("MQTT connection failed!");
         current_device_state = DEVICE_STATE_DEVICE_ERROR;
+        mqtt_try_reconnect();
     }
 }
 

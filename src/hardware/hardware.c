@@ -46,18 +46,12 @@ uint8_t switch_read(uint8_t index) {
 }
 
 void gsm_module_power_cycle(void) {
-    // Cấu hình chân GSM_POWER_PIN là output push-pull
     GSM_POWER_GPIO_PORT->MODER &= ~(3U << (GSM_POWER_PIN * 2));
     GSM_POWER_GPIO_PORT->MODER |=  (1U << (GSM_POWER_PIN * 2));
     GSM_POWER_GPIO_PORT->OTYPER &= ~(1U << GSM_POWER_PIN);
     GSM_POWER_GPIO_PORT->OSPEEDR |= (3U << (GSM_POWER_PIN * 2));
     GSM_POWER_GPIO_PORT->PUPDR &= ~(3U << (GSM_POWER_PIN * 2));
-
-    // Đưa chân xuống mức thấp (tắt nguồn)
     GSM_POWER_GPIO_PORT->ODR &= ~(1U << GSM_POWER_PIN);
-    for (volatile int i = 0; i < 1000000; i++);
-
-    // Bật lại nguồn
-    GSM_POWER_GPIO_PORT->ODR |= (1U << GSM_POWER_PIN);
-    for (volatile int i = 0; i < 1000000; i++);
+    delay_ms(2000); 
+    GSM_POWER_GPIO_PORT->ODR |= (1U << GSM_POWER_PIN); 
 }

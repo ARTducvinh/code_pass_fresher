@@ -6,4 +6,4 @@ hardware.c:35:6:hw_led_config	16	static
 hardware.c:38:6:hw_led_write	16	static
 hardware.c:41:6:switch_init	4	static
 hardware.c:44:9:switch_read	16	static
-hardware.c:48:6:gsm_module_power_cycle	16	static
+hardware.c:48:6:gsm_module_power_cycle	8	static
